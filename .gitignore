@@ -1,6 +1,15 @@
 # IntelliJ
-/.idea
-/out
+.classpath
+.project
+.settings
+.idea
+*.iml
+*.ipr
+*.iws
+out/
+
+# MacOS
+.DS_Store
 
 # Compiled class file
 *.class
