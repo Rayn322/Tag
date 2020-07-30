@@ -11,7 +11,7 @@ public class Timer implements Listener {
         plugin = instance;
     }
     
-    public void tagTimer(Long length) {
+    public static void tagTimer(Long length) {
         
         // converts minutes to ticks
         length = length * 1200;
@@ -32,6 +32,21 @@ public class Timer implements Listener {
                 + ChatColor.GREEN + " was it at the end!");
             plugin.stopTag();
         }, length);
+    }
+    
+    // turns on spawn protection for 3 seconds
+    public static void spawnProtectionTimer() {
+        plugin.isSpawnProtected = true;
+        // wait 3 seconds and then turn it off
+        Bukkit.getScheduler().runTaskLater(plugin, () -> plugin.isSpawnProtected = false, 100L);
+        
+        // countdown
+        Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "5"), 0L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "4"), 20L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "3"), 40L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "2"), 60L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "1"), 80L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "Go!"), 100L);
     }
     
 }

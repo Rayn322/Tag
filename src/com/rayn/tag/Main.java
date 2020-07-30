@@ -56,13 +56,6 @@ public class Main extends JavaPlugin implements Listener {
     private double tagDuration = 1.0;
     public boolean usingTimer = false;
     
-    // turns on spawn protection for 3 seconds
-    public void spawnProtectionTimer() {
-        isSpawnProtected = true;
-        // wait 3 seconds and then turn it off
-        Bukkit.getScheduler().runTaskLater(this, () -> isSpawnProtected = false, 60L);
-    }
-    
     // stops tag
     public void stopTag() {
         Bukkit.broadcastMessage(ChatColor.RED + "Tag has been stopped!");
@@ -144,7 +137,7 @@ public class Main extends JavaPlugin implements Listener {
                     }
                     
                     // delay for 3 seconds
-                    spawnProtectionTimer();
+                    Timer.spawnProtectionTimer();
                     
                     if (args.length >= 2) {
                         usingTimer = true;
@@ -156,10 +149,10 @@ public class Main extends JavaPlugin implements Listener {
                             usingTimer = false;
                         }
                     }
-    
+                    
                     if (usingTimer) {
                         Bukkit.broadcastMessage(ChatColor.GREEN + player.getName() + " is starting a " + ChatColor.YELLOW
-                                + tagDuration + ChatColor.GREEN + " minute game as it!");
+                                + (int) tagDuration + ChatColor.GREEN + " minute game as it!");
                     } else {
                         Bukkit.broadcastMessage(ChatColor.GREEN + player.getName() + " is starting an infinite game as it!");
                     }

@@ -1,8 +1,8 @@
 main: com.rayn.tag.Main
 name: Tag
-version: 0.1
+version: "0.1"
 author: Rayn
-api-version: 1.13
+api-version: "1.13"
 
 commands:
   tag:
