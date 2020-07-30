@@ -46,7 +46,7 @@ public class Main extends JavaPlugin implements Listener {
     }
     
     private Player itPlayer;
-    boolean isPlayingTag;
+    public boolean isPlayingTag;
     public BossBar bar = Bukkit.getServer().createBossBar("It player will display here.", BarColor.BLUE, BarStyle.SOLID);
     private final String syntaxError = ChatColor.RED + "Syntax: /tag <start/stop> <length in minutes (optional)>";
     private WorldBorder worldBorder;
@@ -199,7 +199,7 @@ public class Main extends JavaPlugin implements Listener {
     public void onDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
             if (event.getEntity() instanceof Player) {
-                if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK || event.getCause() == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) {
+                if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
                     if (isPlayingTag && !isSpawnProtected) {
                         Player damager = (Player) event.getDamager();
                         Player victim = (Player) event.getEntity();
