@@ -1,5 +1,5 @@
 # Tag
- A Minecraft server plugin that adds a game of tag.
+A Minecraft server plugin so you can play tag with your friends!
  
 
 # Using the plugin
@@ -8,4 +8,4 @@ This will warp everyone to a random spot in the world. Whoever ran the command w
 If no length is specified the game will be infinite. Currently no decimals are allowed.
 
 # Supported Versions
-The plugin only officially supports 1.16 but may work with future versions and/or past versions.
+Currently there are two different versions of the plugin. One supports 1.13-1.16 and the other supports 1.9-1.12.
