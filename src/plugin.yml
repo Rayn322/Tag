@@ -1,0 +1,9 @@
+main: com.rayn.tag.Main
+name: Tag
+version: 1.0
+author: Rayn
+api-version: 1.16
+
+commands:
+  tag:
+    description: Command for starting and stopping a game of tag.
