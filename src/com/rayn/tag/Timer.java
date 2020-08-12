@@ -48,34 +48,34 @@ public class Timer implements Listener {
         
         // countdown
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "3");
             for (int i = 0; i < world.getPlayers().size(); i++) {
                 Player player = world.getPlayers().get(i);
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 0.5f);
+                player.sendTitle(ChatColor.BLUE + "3", null, 10,0, 10);
             }
         }, 40L);
         
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "2");
             for (int i = 0; i < world.getPlayers().size(); i++) {
                 Player player = world.getPlayers().get(i);
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 0.5f);
+                player.sendTitle(ChatColor.BLUE + "2", null, 10,0, 10);
             }
         }, 60L);
         
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "1");
             for (int i = 0; i < world.getPlayers().size(); i++) {
                 Player player = world.getPlayers().get(i);
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 0.5f);
+                player.sendTitle(ChatColor.BLUE + "1", null, 10,0, 10);
             }
         }, 80L);
         
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "Go!");
             for (int i = 0; i < world.getPlayers().size(); i++) {
                 Player player = world.getPlayers().get(i);
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 1f);
+                player.sendTitle(ChatColor.BLUE + "Go!", null, 10,40, 20);
             }
         }, 100L);
     
