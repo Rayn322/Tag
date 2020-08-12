@@ -91,7 +91,7 @@ public class Main extends JavaPlugin implements Listener {
     
                 // cancels the timer
                 Bukkit.getServer().getScheduler().cancelTasks(this);
-                
+    
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     if (getItPlayer() != null) {
@@ -102,43 +102,43 @@ public class Main extends JavaPlugin implements Listener {
                     isPlayingTag = true;
                     bar.setTitle(player.getName() + " is currently it!");
                     bar.setVisible(true);
-                    
+        
                     // gives it player the helmet
                     ItemStack itHelmet = new ItemStack(Material.LEATHER_HELMET);
                     LeatherArmorMeta meta = (LeatherArmorMeta) itHelmet.getItemMeta();
                     meta.setColor(Color.RED);
                     itHelmet.setItemMeta(meta);
                     player.getInventory().setHelmet(itHelmet);
-                    
+        
                     // gets random coordinates between 0 and 5000
                     Location randomLocation = worldBorderManager.getRandomLocation(player.getWorld());
-                    
+        
                     // sets all players hunger to 20, plays sound, and teleports them to 0, 0
                     World world = player.getWorld();
                     for (int i = 0; i < world.getPlayers().size(); i++) {
                         Player playerI = world.getPlayers().get(i);
                         playerI.setFoodLevel(20);
                         playerI.setGameMode(GameMode.SURVIVAL);
-                        playerI.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
-                        
+                        playerI.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 0.5f);
+    
                         // teleports to the random block
                         Location highestBlock = worldBorderManager.findHighestBlock((int) randomLocation.getX(), (int) randomLocation.getZ(), world);
                         playerI.teleport(highestBlock);
                     }
-                    
+        
                     // sets the worldborder to the same random block
                     worldBorder = world.getWorldBorder();
                     worldBorder.setCenter(randomLocation.getX(), randomLocation.getZ());
                     worldBorder.setSize(50);
-                    
+        
                     // adds players to boss bar display
                     for (int i = 0; i < world.getPlayers().size(); i++) {
                         bar.addPlayer(world.getPlayers().get(i));
                     }
-                    
+        
                     // delay for 3 seconds
                     Timer.spawnProtectionTimer();
-                    
+        
                     if (args.length >= 2) {
                         usingTimer = true;
                         try {
@@ -149,33 +149,40 @@ public class Main extends JavaPlugin implements Listener {
                             usingTimer = false;
                         }
                     }
-                    
+        
                     if (usingTimer) {
                         Bukkit.broadcastMessage(ChatColor.GREEN + player.getName() + " is starting a " + ChatColor.YELLOW
                                 + (int) tagDuration + ChatColor.GREEN + " minute game as it!");
                     } else {
                         Bukkit.broadcastMessage(ChatColor.GREEN + player.getName() + " is starting an infinite game as it!");
                     }
-                    
+        
                 } else {
                     sender.sendMessage("Console can't play. Sorry.");
                 }
-                
+    
                 return true;
-                
+    
             } else if (args[0].equalsIgnoreCase("stop")) {
                 // ends tag game
                 stopTag();
-                
-                return true;
-                
-            } else {
-                sender.sendMessage(syntaxError);
-            }
-        }
+    
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    for (int i = 0; i < player.getWorld().getPlayers().size(); i++) {
+                        player.getWorld().getPlayers().get(i);
+                        player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 0.5f);
+                    }
+                }
+                    return true;
         
-        return false;
-    }
+                } else {
+                    sender.sendMessage(syntaxError);
+                }
+            }
+    
+            return false;
+        }
     
     // stops hunger loss if they are playing tag
     @EventHandler
@@ -187,7 +194,7 @@ public class Main extends JavaPlugin implements Listener {
         }
     }
     
-    // manages it player
+    // makes person it if they are being tagged
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {

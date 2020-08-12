@@ -2,11 +2,15 @@ package com.rayn.tag;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 public class Timer implements Listener {
     
     static Main plugin;
+    
     public Timer(Main instance) {
         plugin = instance;
     }
@@ -29,7 +33,7 @@ public class Timer implements Listener {
         // ends tag
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + plugin.getItPlayer().getDisplayName()
-                + ChatColor.GREEN + " was it at the end!");
+                    + ChatColor.GREEN + " was it at the end!");
             plugin.stopTag();
         }, length);
     }
@@ -37,16 +41,43 @@ public class Timer implements Listener {
     // turns on spawn protection for 3 seconds
     public static void spawnProtectionTimer() {
         plugin.isSpawnProtected = true;
+        World world = plugin.getItPlayer().getWorld();
+        
         // wait 3 seconds and then turn it off
         Bukkit.getScheduler().runTaskLater(plugin, () -> plugin.isSpawnProtected = false, 100L);
         
         // countdown
-        Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "5"), 0L);
-        Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "4"), 20L);
-        Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "3"), 40L);
-        Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "2"), 60L);
-        Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "1"), 80L);
-        Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "Go!"), 100L);
-    }
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "3");
+            for (int i = 0; i < world.getPlayers().size(); i++) {
+                Player player = world.getPlayers().get(i);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 0.5f);
+            }
+        }, 40L);
+        
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "2");
+            for (int i = 0; i < world.getPlayers().size(); i++) {
+                Player player = world.getPlayers().get(i);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 0.5f);
+            }
+        }, 60L);
+        
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "1");
+            for (int i = 0; i < world.getPlayers().size(); i++) {
+                Player player = world.getPlayers().get(i);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 0.5f);
+            }
+        }, 80L);
+        
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "Go!");
+            for (int i = 0; i < world.getPlayers().size(); i++) {
+                Player player = world.getPlayers().get(i);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 1f);
+            }
+        }, 100L);
     
+    }
 }
