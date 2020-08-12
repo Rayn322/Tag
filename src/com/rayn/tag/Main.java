@@ -45,15 +45,17 @@ public class Main extends JavaPlugin implements Listener {
         }
     }
     
-    private Player itPlayer;
-    boolean isPlayingTag;
+    public boolean isPlayingTag;
+    public boolean isSpawnProtected = false;
     public BossBar bar = Bukkit.getServer().createBossBar("It player will display here.", BarColor.BLUE, BarStyle.SOLID);
+    private Player itPlayer;
     private final String syntaxError = ChatColor.RED + "Syntax: /tag <start/stop> <length in minutes (optional)>";
     private WorldBorder worldBorder;
-    boolean isSpawnProtected = false;
+    
     Timer timer = new Timer(this);
     WorldBorderManager worldBorderManager = new WorldBorderManager(this);
     private double tagDuration = 1.0;
+    // so if you are trying to start an infinite game then it doesn't run the timer.
     public boolean usingTimer = false;
     
     // stops tag
