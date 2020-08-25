@@ -7,3 +7,9 @@ api-version: "1.13"
 commands:
   tag:
     description: Command for starting and stopping a game of tag.
+    permission: tag.startgame
+    permission-message: You do not have permission!
+permissions:
+  tag.startgame:
+    description: Allows the player to start a game.
+    default: op
