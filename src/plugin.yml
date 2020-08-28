@@ -1,6 +1,6 @@
 main: com.rayn.tag.Main
 name: Tag
-version: "0.2"
+version: "0.3"
 author: Rayn
 api-version: "1.9"
 
