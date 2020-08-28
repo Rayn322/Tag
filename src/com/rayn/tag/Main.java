@@ -16,6 +16,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
+
 public class Main extends JavaPlugin implements Listener {
     
     @Override
@@ -24,6 +26,8 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this, this);
         
         getServer().getPluginManager().registerEvents(timer, this);
+        
+        Objects.requireNonNull(getCommand("tag")).setTabCompleter(new TabAutocomplete());
         
         isPlayingTag = false;
     }
