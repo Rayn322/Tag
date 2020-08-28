@@ -50,32 +50,32 @@ public class Timer implements Listener {
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             for (int i = 0; i < world.getPlayers().size(); i++) {
                 Player player = world.getPlayers().get(i);
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 0.5f);
-                player.sendTitle(ChatColor.BLUE + "3", null, 10,0, 10);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1f, 0.5f);
+                player.sendTitle(ChatColor.BLUE + "3", null);
             }
         }, 40L);
         
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             for (int i = 0; i < world.getPlayers().size(); i++) {
                 Player player = world.getPlayers().get(i);
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 0.5f);
-                player.sendTitle(ChatColor.BLUE + "2", null, 10,0, 10);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1f, 0.5f);
+                player.sendTitle(ChatColor.BLUE + "2", null);
             }
         }, 60L);
         
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             for (int i = 0; i < world.getPlayers().size(); i++) {
                 Player player = world.getPlayers().get(i);
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 0.5f);
-                player.sendTitle(ChatColor.BLUE + "1", null, 10,0, 10);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1f, 0.5f);
+                player.sendTitle(ChatColor.BLUE + "1", null);
             }
         }, 80L);
         
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             for (int i = 0; i < world.getPlayers().size(); i++) {
                 Player player = world.getPlayers().get(i);
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 1f);
-                player.sendTitle(ChatColor.BLUE + "Go!", null, 10,40, 20);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_HARP, 1f, 1f);
+                player.sendTitle(ChatColor.BLUE + "Go!", null);
             }
         }, 100L);
     

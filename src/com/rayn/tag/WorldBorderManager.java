@@ -19,12 +19,11 @@ public class WorldBorderManager {
         int i = 256;
         
         while (lookingForBlock) {
-            if (world.getBlockAt(x, i, z).getBlockData().getMaterial().equals(Material.VOID_AIR)
-                    || world.getBlockAt(x, i, z).getBlockData().getMaterial().equals(Material.AIR)) {
+            if (world.getBlockAt(x, i, z).getType().equals(Material.AIR)) {
                 i--;
             } else {
                 lookingForBlock = false;
-                System.out.println("found a " + world.getBlockAt(x, i, z).getBlockData().getAsString() + " block at y = " + i);
+                System.out.println("found a " + world.getBlockAt(x, i, z).getType().toString() + " block at y = " + i);
                 Location top = world.getSpawnLocation();
                 top.setX(x + 0.5);
                 top.setY(i + 1);
