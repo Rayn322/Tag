@@ -21,8 +21,7 @@ public class TabAutocomplete implements TabCompleter {
             return startOrStop;
             
             }
-         
-        return null;
         
+        return null;
         }
 }

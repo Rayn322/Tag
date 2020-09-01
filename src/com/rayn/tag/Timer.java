@@ -10,7 +10,6 @@ import org.bukkit.event.Listener;
 public class Timer implements Listener {
     
     static Main plugin;
-    
     public Timer(Main instance) {
         plugin = instance;
     }

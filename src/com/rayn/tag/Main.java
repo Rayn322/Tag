@@ -58,6 +58,7 @@ public class Main extends JavaPlugin implements Listener {
     
     Timer timer = new Timer(this);
     WorldBorderManager worldBorderManager = new WorldBorderManager(this);
+    TagPlayerManager tagPlayerManager = new TagPlayerManager(this);
     private double tagDuration = 1.0;
     // so if you are trying to start an infinite game then it doesn't run the timer.
     public boolean usingTimer = false;
@@ -126,6 +127,9 @@ public class Main extends JavaPlugin implements Listener {
                         playerI.setFoodLevel(20);
                         playerI.setGameMode(GameMode.SURVIVAL);
                         playerI.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 0.5f);
+                        
+                        // saves old location before teleporting
+                        tagPlayerManager.saveLocation(playerI);
     
                         // teleports to the random block
                         Location highestBlock = worldBorderManager.findHighestBlock((int) randomLocation.getX(), (int) randomLocation.getZ(), world);
@@ -149,7 +153,7 @@ public class Main extends JavaPlugin implements Listener {
                         usingTimer = true;
                         try {
                             tagDuration = Long.parseLong(args[1]);
-                            timer.tagTimer(Long.parseLong(args[1]));
+                            Timer.tagTimer(Long.parseLong(args[1]));
                         } catch (NumberFormatException e) {
                             Bukkit.getServer().broadcastMessage("Time limit is not the correct format. Starting infinite game.");
                             usingTimer = false;
@@ -175,9 +179,15 @@ public class Main extends JavaPlugin implements Listener {
     
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    for (int i = 0; i < player.getWorld().getPlayers().size(); i++) {
-                        player.getWorld().getPlayers().get(i);
-                        player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 0.5f);
+                    World world = player.getWorld();
+                    for (int i = 0; i < world.getPlayers().size(); i++) {
+                        Player playerI = world.getPlayers().get(i);
+                        player.playSound(playerI.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 0.5f);
+                        
+                        Location oldLocation = tagPlayerManager.getLocation(playerI);
+                        if (oldLocation != null) {
+                            playerI.teleport(oldLocation);
+                        }
                     }
                 }
                     return true;
