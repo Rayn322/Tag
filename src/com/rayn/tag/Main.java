@@ -71,11 +71,21 @@ public class Main extends JavaPlugin implements Listener {
         if (worldBorder != null) {
             worldBorder.reset();
         }
-    
+        
+        World world = getItPlayer().getWorld();
+        for (int i = 0; i < world.getPlayers().size(); i++) {
+            Player playerI = world.getPlayers().get(i);
+            playerI.playSound(playerI.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 0.5f);
+            
+            Location oldLocation = tagPlayerManager.getLocation(playerI);
+            if (oldLocation != null) {
+                playerI.teleport(oldLocation);
+            }
+        }
+        
         // removes potion effect and helmet, also resets itPlayer
         if (getItPlayer() != null) {
-            Player player = getItPlayer();
-            player.getInventory().setHelmet(null);
+            itPlayer.getInventory().setHelmet(null);
 //          player.removePotionEffect(PotionEffectType.SPEED);
             setItPlayer(null);
         }
@@ -95,10 +105,10 @@ public class Main extends JavaPlugin implements Listener {
         if (label.equalsIgnoreCase("tag")) {
             // starts tag game
             if (args[0].equalsIgnoreCase("start")) {
-    
+                
                 // cancels the timer
                 Bukkit.getServer().getScheduler().cancelTasks(this);
-    
+                
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     if (getItPlayer() != null) {
@@ -109,17 +119,17 @@ public class Main extends JavaPlugin implements Listener {
                     isPlayingTag = true;
                     bar.setTitle(player.getName() + " is currently it!");
                     bar.setVisible(true);
-        
+                    
                     // gives it player the helmet
                     ItemStack itHelmet = new ItemStack(Material.LEATHER_HELMET);
                     LeatherArmorMeta meta = (LeatherArmorMeta) itHelmet.getItemMeta();
                     meta.setColor(Color.RED);
                     itHelmet.setItemMeta(meta);
                     player.getInventory().setHelmet(itHelmet);
-        
+                    
                     // gets random coordinates between 0 and 5000
                     Location randomLocation = worldBorderManager.getRandomLocation(player.getWorld());
-        
+                    
                     // sets all players hunger to 20, plays sound, and teleports them to 0, 0
                     World world = player.getWorld();
                     for (int i = 0; i < world.getPlayers().size(); i++) {
@@ -130,25 +140,25 @@ public class Main extends JavaPlugin implements Listener {
                         
                         // saves old location before teleporting
                         tagPlayerManager.saveLocation(playerI);
-    
+                        
                         // teleports to the random block
                         Location highestBlock = worldBorderManager.findHighestBlock((int) randomLocation.getX(), (int) randomLocation.getZ(), world);
                         playerI.teleport(highestBlock);
                     }
-        
+                    
                     // sets the worldborder to the same random block
                     worldBorder = world.getWorldBorder();
                     worldBorder.setCenter(randomLocation.getX(), randomLocation.getZ());
                     worldBorder.setSize(50);
-        
+                    
                     // adds players to boss bar display
                     for (int i = 0; i < world.getPlayers().size(); i++) {
                         bar.addPlayer(world.getPlayers().get(i));
                     }
-        
+                    
                     // delay for 3 seconds
                     Timer.spawnProtectionTimer();
-        
+                    
                     if (args.length >= 2) {
                         usingTimer = true;
                         try {
@@ -159,46 +169,39 @@ public class Main extends JavaPlugin implements Listener {
                             usingTimer = false;
                         }
                     }
-        
+                    
                     if (usingTimer) {
                         Bukkit.broadcastMessage(ChatColor.GREEN + player.getName() + " is starting a " + ChatColor.YELLOW
                                 + (int) tagDuration + ChatColor.GREEN + " minute game as it!");
                     } else {
                         Bukkit.broadcastMessage(ChatColor.GREEN + player.getName() + " is starting an infinite game as it!");
                     }
-        
+                    
                 } else {
                     sender.sendMessage("Console can't play. Sorry.");
                 }
-    
+                
                 return true;
-    
+                
             } else if (args[0].equalsIgnoreCase("stop")) {
                 // ends tag game
-                stopTag();
-    
+                
                 if (sender instanceof Player) {
-                    Player player = (Player) sender;
-                    World world = player.getWorld();
-                    for (int i = 0; i < world.getPlayers().size(); i++) {
-                        Player playerI = world.getPlayers().get(i);
-                        player.playSound(playerI.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 0.5f);
-                        
-                        Location oldLocation = tagPlayerManager.getLocation(playerI);
-                        if (oldLocation != null) {
-                            playerI.teleport(oldLocation);
-                        }
-                    }
+                    stopTag();
                 }
-                    return true;
-        
-                } else {
-                    sender.sendMessage(syntaxError);
-                }
+                
+                return true;
+                
+            } else {
+                sender.sendMessage(syntaxError);
+                
+                return true;
             }
-    
-            return false;
+            
         }
+        
+        return false;
+    }
     
     // stops hunger loss if they are playing tag
     @EventHandler
@@ -221,7 +224,7 @@ public class Main extends JavaPlugin implements Listener {
                         Player victim = (Player) event.getEntity();
                         event.setDamage(0);
                         damager.getInventory().setHelmet(null);
-    
+                        
                         if (damager == getItPlayer()) {
                             setItPlayer(null);
                             setItPlayer(victim);
