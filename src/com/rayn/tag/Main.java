@@ -16,8 +16,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Objects;
-
 public class Main extends JavaPlugin implements Listener {
     
     @Override
@@ -27,7 +25,19 @@ public class Main extends JavaPlugin implements Listener {
         
         getServer().getPluginManager().registerEvents(timer, this);
         
-        Objects.requireNonNull(getCommand("tag")).setTabCompleter(new TabAutocomplete());
+        getCommand("tag").setTabCompleter(new TabAutocomplete());
+        
+        CustomConfig.setup();
+        CustomConfig.getConfig().addDefault("version", "0.3");
+        CustomConfig.getConfig().addDefault("use-random-location", true);
+        CustomConfig.getConfig().options().copyDefaults(true);
+        CustomConfig.save();
+        
+//        System.out.println("**********************************");
+//        System.out.println(this.getConfig().getBoolean("use-random-location"));
+//        System.out.println(this.getConfig().getIntegerList("tag-coordinates").get(0));
+//        System.out.println(this.getConfig().getIntegerList("tag-coordinates").get(1));
+//        System.out.println("**********************************");
         
         isPlayingTag = false;
     }
@@ -49,22 +59,28 @@ public class Main extends JavaPlugin implements Listener {
         }
     }
     
+    Timer timer = new Timer(this);
+    WorldBorderManager worldBorderManager = new WorldBorderManager(this);
+    TagPlayerManager tagPlayerManager = new TagPlayerManager(this);
+    
     public boolean isPlayingTag;
     public boolean isSpawnProtected = false;
     public BossBar bar = Bukkit.getServer().createBossBar("It player will display here.", BarColor.BLUE, BarStyle.SOLID);
     private Player itPlayer;
     private final String syntaxError = ChatColor.RED + "Syntax: /tag <start/stop> <length in minutes (optional)>";
+    private final String[] commands = {ChatColor.YELLOW + "Tag Commands:",
+            ChatColor.YELLOW + "/tag start <length in minutes (optional)>" + ChatColor.BLUE + " - Starts the game of tag.",
+            ChatColor.YELLOW + "/tag stop <length in minutes (optional)>" + ChatColor.BLUE + " - Stops the game of tag.",
+            ChatColor.YELLOW + "/tag reload" + ChatColor.BLUE + " - Reloads the config."};
     private WorldBorder worldBorder;
     
-    Timer timer = new Timer(this);
-    WorldBorderManager worldBorderManager = new WorldBorderManager(this);
-    TagPlayerManager tagPlayerManager = new TagPlayerManager(this);
+    
     private double tagDuration = 1.0;
     // so if you are trying to start an infinite game then it doesn't run the timer.
     public boolean usingTimer = false;
     
     // stops tag
-    public void stopTag() {
+    public void stopTag(Player player) {
         Bukkit.broadcastMessage(ChatColor.RED + "Tag has been stopped!");
         isPlayingTag = false;
         bar.setVisible(false);
@@ -72,7 +88,7 @@ public class Main extends JavaPlugin implements Listener {
             worldBorder.reset();
         }
         
-        World world = getItPlayer().getWorld();
+        World world = player.getWorld();
         for (int i = 0; i < world.getPlayers().size(); i++) {
             Player playerI = world.getPlayers().get(i);
             playerI.playSound(playerI.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 0.5f);
@@ -98,7 +114,9 @@ public class Main extends JavaPlugin implements Listener {
         
         // makes sure it doesn't crash if there are no args.
         if (args.length == 0) {
-            sender.sendMessage(syntaxError);
+            for (int i = 0; i < commands.length; i++) {
+                sender.sendMessage(commands[i]);
+            }
             return false;
         }
         
@@ -187,10 +205,25 @@ public class Main extends JavaPlugin implements Listener {
                 // ends tag game
                 
                 if (sender instanceof Player) {
-                    stopTag();
+                    Player player = (Player) sender;
+                    stopTag(player);
                 }
                 
                 return true;
+                
+            } else if (args[0].equalsIgnoreCase("reload")) {
+                this.reloadConfig();
+                sender.sendMessage(ChatColor.GREEN + "Reloaded config.");
+                System.out.println(this.getConfig().getBoolean("use-random-location"));
+                System.out.println(this.getConfig().getIntegerList("tag-coordinates").get(0));
+                System.out.println(this.getConfig().getIntegerList("tag-coordinates").get(1));
+                
+                return true;
+                
+            } else if (args[0].equalsIgnoreCase("help")) {
+                for (int i = 0; i < commands.length; i++) {
+                    sender.sendMessage(commands[i]);
+                }
                 
             } else {
                 sender.sendMessage(syntaxError);

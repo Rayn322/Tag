@@ -33,7 +33,7 @@ public class Timer implements Listener {
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + plugin.getItPlayer().getDisplayName()
                     + ChatColor.GREEN + " was it at the end!");
-            plugin.stopTag();
+            plugin.stopTag(plugin.getItPlayer());
         }, length);
     }
     

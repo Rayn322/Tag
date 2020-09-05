@@ -14,11 +14,12 @@ public class TabAutocomplete implements TabCompleter {
         
         if (args.length == 1) {
             
-            List<String> startOrStop = new ArrayList<>();
-            startOrStop.add("start");
-            startOrStop.add("stop");
+            List<String> parameters = new ArrayList<>();
+            parameters.add("start");
+            parameters.add("stop");
+            parameters.add("reload");
             
-            return startOrStop;
+            return parameters;
             
             }
         
