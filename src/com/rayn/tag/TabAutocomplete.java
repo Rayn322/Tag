@@ -18,11 +18,13 @@ public class TabAutocomplete implements TabCompleter {
             parameters.add("start");
             parameters.add("stop");
             parameters.add("reload");
+            parameters.add("coordinates");
+            parameters.add("randomlocation");
             
             return parameters;
             
-            }
+        }
         
         return null;
-        }
+    }
 }

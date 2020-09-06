@@ -6,6 +6,7 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,17 +28,13 @@ public class Main extends JavaPlugin implements Listener {
         
         getCommand("tag").setTabCompleter(new TabAutocomplete());
         
-        CustomConfig.setup();
-        CustomConfig.getConfig().addDefault("version", "0.3");
-        CustomConfig.getConfig().addDefault("use-random-location", true);
-        CustomConfig.getConfig().options().copyDefaults(true);
-        CustomConfig.save();
+        saveDefaultConfig();
         
-//        System.out.println("**********************************");
-//        System.out.println(this.getConfig().getBoolean("use-random-location"));
-//        System.out.println(this.getConfig().getIntegerList("tag-coordinates").get(0));
-//        System.out.println(this.getConfig().getIntegerList("tag-coordinates").get(1));
-//        System.out.println("**********************************");
+        System.out.println("**********************************");
+        System.out.println(config.getBoolean("use-random-location"));
+        System.out.println(config.getInt("coordinates.x"));
+        System.out.println(config.getInt("coordinates.z"));
+        System.out.println("**********************************");
         
         isPlayingTag = false;
     }
@@ -45,6 +42,25 @@ public class Main extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
     }
+    
+    Timer timer = new Timer(this);
+    WorldBorderManager worldBorderManager = new WorldBorderManager(this);
+    TagPlayerManager tagPlayerManager = new TagPlayerManager(this);
+    FileConfiguration config = this.getConfig();
+    
+    public boolean isPlayingTag;
+    public boolean isSpawnProtected = false;
+    public BossBar bar = Bukkit.getServer().createBossBar("It player will display here.", BarColor.BLUE, BarStyle.SOLID);
+    private Player itPlayer;
+    private final String syntaxError = ChatColor.YELLOW + "Syntax: /tag <start/stop> <length in minutes (optional)>";
+    private final String[] commands = {ChatColor.YELLOW + "Tag Commands:",
+            ChatColor.YELLOW + "/tag start <length in minutes (optional)>" + ChatColor.BLUE + " - Starts the game of tag.",
+            ChatColor.YELLOW + "/tag stop <length in minutes (optional)>" + ChatColor.BLUE + " - Stops the game of tag.",
+            ChatColor.YELLOW + "/tag reload" + ChatColor.BLUE + " - Reloads the config."};
+    private WorldBorder worldBorder;
+    private double tagDuration = 1.0;
+    // so if you are trying to start an infinite game then it doesn't run the timer.
+    public boolean usingTimer = false;
     
     // Maybe this makes it possible for other plugins to mess with who is it.
     // I'll just leave it. First time making my own getters and setters too while probably unnecessary.
@@ -59,26 +75,6 @@ public class Main extends JavaPlugin implements Listener {
         }
     }
     
-    Timer timer = new Timer(this);
-    WorldBorderManager worldBorderManager = new WorldBorderManager(this);
-    TagPlayerManager tagPlayerManager = new TagPlayerManager(this);
-    
-    public boolean isPlayingTag;
-    public boolean isSpawnProtected = false;
-    public BossBar bar = Bukkit.getServer().createBossBar("It player will display here.", BarColor.BLUE, BarStyle.SOLID);
-    private Player itPlayer;
-    private final String syntaxError = ChatColor.RED + "Syntax: /tag <start/stop> <length in minutes (optional)>";
-    private final String[] commands = {ChatColor.YELLOW + "Tag Commands:",
-            ChatColor.YELLOW + "/tag start <length in minutes (optional)>" + ChatColor.BLUE + " - Starts the game of tag.",
-            ChatColor.YELLOW + "/tag stop <length in minutes (optional)>" + ChatColor.BLUE + " - Stops the game of tag.",
-            ChatColor.YELLOW + "/tag reload" + ChatColor.BLUE + " - Reloads the config."};
-    private WorldBorder worldBorder;
-    
-    
-    private double tagDuration = 1.0;
-    // so if you are trying to start an infinite game then it doesn't run the timer.
-    public boolean usingTimer = false;
-    
     // stops tag
     public void stopTag(Player player) {
         Bukkit.broadcastMessage(ChatColor.RED + "Tag has been stopped!");
@@ -91,12 +87,13 @@ public class Main extends JavaPlugin implements Listener {
         World world = player.getWorld();
         for (int i = 0; i < world.getPlayers().size(); i++) {
             Player playerI = world.getPlayers().get(i);
-            playerI.playSound(playerI.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 0.5f);
             
             Location oldLocation = tagPlayerManager.getLocation(playerI);
             if (oldLocation != null) {
                 playerI.teleport(oldLocation);
             }
+            
+            Bukkit.getScheduler().runTaskLater(this, () -> playerI.playSound(playerI.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 0.5f) , 3);
         }
         
         // removes potion effect and helmet, also resets itPlayer
@@ -114,8 +111,8 @@ public class Main extends JavaPlugin implements Listener {
         
         // makes sure it doesn't crash if there are no args.
         if (args.length == 0) {
-            for (int i = 0; i < commands.length; i++) {
-                sender.sendMessage(commands[i]);
+            for (String command : commands) {
+                sender.sendMessage(command);
             }
             return false;
         }
@@ -154,7 +151,6 @@ public class Main extends JavaPlugin implements Listener {
                         Player playerI = world.getPlayers().get(i);
                         playerI.setFoodLevel(20);
                         playerI.setGameMode(GameMode.SURVIVAL);
-                        playerI.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 0.5f);
                         
                         // saves old location before teleporting
                         tagPlayerManager.saveLocation(playerI);
@@ -162,6 +158,9 @@ public class Main extends JavaPlugin implements Listener {
                         // teleports to the random block
                         Location highestBlock = worldBorderManager.findHighestBlock((int) randomLocation.getX(), (int) randomLocation.getZ(), world);
                         playerI.teleport(highestBlock);
+                        
+                        Bukkit.getScheduler().runTaskLater(this, () -> playerI.playSound(playerI.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 0.5f) , 5);
+    
                     }
                     
                     // sets the worldborder to the same random block
@@ -214,23 +213,57 @@ public class Main extends JavaPlugin implements Listener {
             } else if (args[0].equalsIgnoreCase("reload")) {
                 this.reloadConfig();
                 sender.sendMessage(ChatColor.GREEN + "Reloaded config.");
-                System.out.println(this.getConfig().getBoolean("use-random-location"));
-                System.out.println(this.getConfig().getIntegerList("tag-coordinates").get(0));
-                System.out.println(this.getConfig().getIntegerList("tag-coordinates").get(1));
+                System.out.println(config.getBoolean("use-random-location"));
+                System.out.println(config.getInt("coordinates.x"));
+                System.out.println(config.getInt("coordinates.z"));
                 
                 return true;
                 
             } else if (args[0].equalsIgnoreCase("help")) {
-                for (int i = 0; i < commands.length; i++) {
-                    sender.sendMessage(commands[i]);
+                for (String command : commands) {
+                    sender.sendMessage(command);
+                }
+            } else if (args[0].equalsIgnoreCase("coordinates")) {
+                int x = 0;
+                int z = 0;
+    
+                try {
+                    x = Integer.parseInt(args[1]);
+                    z = Integer.parseInt(args[2]);
+                } catch (NumberFormatException e) {
+                    sender.sendMessage(ChatColor.YELLOW + "Unable to set coordinates to that number.");
+                    return true;
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    sender.sendMessage(ChatColor.YELLOW + "Usage: /tag coordinates <x> <z>");
+                    return true;
+                }
+    
+                config.set("coordinates.x", x);
+                config.set("coordinates.z", z);
+                saveConfig();
+    
+                sender.sendMessage(ChatColor.YELLOW + "Set coordinates to " + ChatColor.BLUE +
+                        "X = " + x + ChatColor.YELLOW + " and " + ChatColor.BLUE + "Z = " + z + ".");
+                
+                return true;
+                
+            } else if (args[0].equalsIgnoreCase("randomlocation")) {
+                if (config.getBoolean("use-random-location")) {
+                    config.set("use-random-location", false);
+                    sender.sendMessage(ChatColor.YELLOW + "Now uses custom coordinates.");
+                } else {
+                    config.set("use-random-location", true);
+                    sender.sendMessage(ChatColor.YELLOW + "Now uses a random location.");
                 }
                 
+                saveConfig();
+                return true;
+    
             } else {
                 sender.sendMessage(syntaxError);
                 
                 return true;
             }
-            
         }
         
         return false;

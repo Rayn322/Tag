@@ -38,8 +38,8 @@ public class WorldBorderManager {
     
     public Location getRandomLocation(World world) {
         Random rand = new Random();
-        int x = plugin.getConfig().getIntegerList("tag-coordinates").get(0);
-        int z = plugin.getConfig().getIntegerList("tag-coordinates").get(1);
+        int x = plugin.config.getInt("coordinates.x");
+        int z = plugin.config.getInt("coordinates.z");
         System.out.println("coordinates are " + x + ", " + z);
         
         if (plugin.getConfig().getBoolean("use-random-location")) {
