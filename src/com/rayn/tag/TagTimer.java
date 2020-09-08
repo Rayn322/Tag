@@ -7,10 +7,10 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-public class Timer implements Listener {
+public class TagTimer implements Listener {
     
     static Main plugin;
-    public Timer(Main instance) {
+    public TagTimer(Main instance) {
         plugin = instance;
     }
     

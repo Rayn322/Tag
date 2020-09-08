@@ -23,18 +23,13 @@ public class Main extends JavaPlugin implements Listener {
     public void onEnable() {
         // registers listeners
         getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(tagTimer, this);
         
-        getServer().getPluginManager().registerEvents(timer, this);
+        Metrics metrics = new Metrics(this, 8787);
         
         getCommand("tag").setTabCompleter(new TabAutocomplete());
         
         saveDefaultConfig();
-        
-        System.out.println("**********************************");
-        System.out.println(config.getBoolean("use-random-location"));
-        System.out.println(config.getInt("coordinates.x"));
-        System.out.println(config.getInt("coordinates.z"));
-        System.out.println("**********************************");
         
         isPlayingTag = false;
     }
@@ -43,7 +38,7 @@ public class Main extends JavaPlugin implements Listener {
     public void onDisable() {
     }
     
-    Timer timer = new Timer(this);
+    TagTimer tagTimer = new TagTimer(this);
     WorldBorderManager worldBorderManager = new WorldBorderManager(this);
     TagPlayerManager tagPlayerManager = new TagPlayerManager(this);
     FileConfiguration config = this.getConfig();
@@ -174,13 +169,13 @@ public class Main extends JavaPlugin implements Listener {
                     }
                     
                     // delay for 3 seconds
-                    Timer.spawnProtectionTimer();
+                    TagTimer.spawnProtectionTimer();
                     
                     if (args.length >= 2) {
                         usingTimer = true;
                         try {
                             tagDuration = Long.parseLong(args[1]);
-                            Timer.tagTimer(Long.parseLong(args[1]));
+                            TagTimer.tagTimer(Long.parseLong(args[1]));
                         } catch (NumberFormatException e) {
                             Bukkit.getServer().broadcastMessage("Time limit is not the correct format. Starting infinite game.");
                             usingTimer = false;
