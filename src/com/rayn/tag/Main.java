@@ -51,6 +51,8 @@ public class Main extends JavaPlugin implements Listener {
     private final String[] commands = {ChatColor.YELLOW + "Tag Commands:",
             ChatColor.YELLOW + "/tag start <length in minutes (optional)>" + ChatColor.BLUE + " - Starts the game of tag.",
             ChatColor.YELLOW + "/tag stop <length in minutes (optional)>" + ChatColor.BLUE + " - Stops the game of tag.",
+            ChatColor.YELLOW + "/tag coordinates <custom/random>" + ChatColor.BLUE + " - Selects whether to use custom coordinates or random coordinates.",
+            ChatColor.YELLOW + "/tag coordinates <x> <z>" + ChatColor.BLUE + " - Sets coordinates to use if random location is off.",
             ChatColor.YELLOW + "/tag reload" + ChatColor.BLUE + " - Reloads the config."};
     private WorldBorder worldBorder;
     private double tagDuration = 1.0;
@@ -235,7 +237,6 @@ public class Main extends JavaPlugin implements Listener {
     
                 config.set("coordinates.x", x);
                 config.set("coordinates.z", z);
-                saveConfig();
     
                 sender.sendMessage(ChatColor.YELLOW + "Set coordinates to " + ChatColor.BLUE +
                         "X = " + x + ChatColor.YELLOW + " and " + ChatColor.BLUE + "Z = " + z + ".");

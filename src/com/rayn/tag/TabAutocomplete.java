@@ -19,7 +19,6 @@ public class TabAutocomplete implements TabCompleter {
             parameters.add("stop");
             parameters.add("reload");
             parameters.add("coordinates");
-            parameters.add("randomlocation");
             
             return parameters;
             
