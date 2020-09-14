@@ -8,4 +8,4 @@ This will warp everyone to a random spot in the world. Whoever ran the command w
 If no length is specified the game will be infinite. Currently no decimals are allowed.
 
 # Supported Versions
-Currently there are two different versions of the plugin. One supports 1.13-1.16 and the other supports 1.9-1.12.
+Currently the only supported versions are 1.13 to 1.16.
