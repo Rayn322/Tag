@@ -8,4 +8,4 @@ This will warp everyone to a random spot in the world. Whoever ran the command w
 If no length is specified the game will be infinite. Currently no decimals are allowed.
 
 # Supported Versions
-Currently the only supported versions are 1.16 to 1.13.
+Currently, the only supported versions are 1.16 to 1.13.
