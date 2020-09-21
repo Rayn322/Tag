@@ -25,11 +25,12 @@ public class Main extends JavaPlugin implements Listener {
             ChatColor.YELLOW + "/tag stop <length in minutes (optional)>" + ChatColor.BLUE + " - Stops the game of tag.",
             ChatColor.YELLOW + "/tag coordinates <x> <z>" + ChatColor.BLUE + " - Sets coordinates to use. Leave blank for random coordinates.",
             ChatColor.YELLOW + "/tag reload" + ChatColor.BLUE + " - Reloads the config."};
+    private final BossBar bar = Bukkit.getServer().createBossBar("It player will display here.", BarColor.BLUE, BarStyle.SOLID);
     public boolean isPlayingTag;
-    public boolean isSpawnProtected = false;
-    public BossBar bar = Bukkit.getServer().createBossBar("It player will display here.", BarColor.BLUE, BarStyle.SOLID);
     // so if you are trying to start an infinite game then it doesn't run the timer.
     public boolean usingTimer = false;
+    protected boolean isSpawnProtected = false;
+    protected Location highestBlock;
     TagTimer tagTimer = new TagTimer(this);
     WorldBorderManager worldBorderManager = new WorldBorderManager(this);
     TagPlayerManager tagPlayerManager = new TagPlayerManager(this);
@@ -37,12 +38,13 @@ public class Main extends JavaPlugin implements Listener {
     private Player itPlayer;
     private WorldBorder worldBorder;
     private double tagDuration = 1.0;
-
+    
     @Override
     public void onEnable() {
         // registers listeners
         getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(tagTimer, this);
+        getServer().getPluginManager().registerEvents(tagPlayerManager, this);
         
         Metrics metrics = new Metrics(this, 8787);
         
@@ -52,7 +54,7 @@ public class Main extends JavaPlugin implements Listener {
         
         isPlayingTag = false;
     }
-
+    
     @Override
     public void onDisable() {
     }
@@ -75,6 +77,7 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.broadcastMessage(ChatColor.RED + "Tag has been stopped!");
         isPlayingTag = false;
         bar.setVisible(false);
+        tagPlayerManager.spectators.clear();
         if (worldBorder != null) {
             worldBorder.reset();
         }
@@ -138,7 +141,7 @@ public class Main extends JavaPlugin implements Listener {
                     player.getInventory().setHelmet(itHelmet);
                     
                     // gets random coordinates between 0 and 5000
-                    Location randomLocation = worldBorderManager.getRandomLocation(player.getWorld());
+                    Location randomLocation = worldBorderManager.getTagLocation(player.getWorld());
                     
                     // sets all players hunger to 20, plays sound, and teleports them to 0, 0
                     World world = player.getWorld();
@@ -151,7 +154,7 @@ public class Main extends JavaPlugin implements Listener {
                         tagPlayerManager.saveLocation(playerI);
                         
                         // teleports to the random block
-                        Location highestBlock = worldBorderManager.findHighestBlock((int) randomLocation.getX(), (int) randomLocation.getZ(), world);
+                        highestBlock = worldBorderManager.findHighestBlock((int) randomLocation.getX(), (int) randomLocation.getZ(), world);
                         playerI.teleport(highestBlock);
                         
                         Bukkit.getScheduler().runTaskLater(this, () -> playerI.playSound(playerI.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 0.5f), 5);
@@ -222,7 +225,7 @@ public class Main extends JavaPlugin implements Listener {
                 if (args.length > 1) {
                     int x;
                     int z;
-                    
+    
                     try {
                         x = Integer.parseInt(args[1]);
                         z = Integer.parseInt(args[2]);
@@ -233,20 +236,29 @@ public class Main extends JavaPlugin implements Listener {
                         sender.sendMessage(ChatColor.YELLOW + "Usage: /tag coordinates <x> <z>");
                         return true;
                     }
-                    
+    
                     config.set("coordinates.x", x);
                     config.set("coordinates.z", z);
                     config.set("use-random-location", false);
-                    
+    
                     sender.sendMessage(ChatColor.YELLOW + "Set coordinates to " + ChatColor.BLUE +
                             "X = " + x + ChatColor.YELLOW + " and " + ChatColor.BLUE + "Z = " + z + ".");
                 } else {
                     config.set("use-random-location", true);
                     sender.sendMessage(ChatColor.YELLOW + "Now uses random coordinates.");
                 }
-                
+    
                 return true;
-                
+    
+            } else if (args[0].equalsIgnoreCase("joingame")) {
+                Player player = (Player) sender;
+                if (tagPlayerManager.spectators.contains(player)) {
+                    tagPlayerManager.spectators.remove(player);
+                    player.teleport(highestBlock);
+                    player.setGameMode(GameMode.SURVIVAL);
+                    System.out.println(player.getDisplayName() + " is now playing.");
+                }
+            
             } else {
                 sender.sendMessage(syntaxError);
                 

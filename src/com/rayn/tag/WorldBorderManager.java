@@ -36,7 +36,7 @@ public class WorldBorderManager {
         return world.getSpawnLocation();
     }
     
-    public Location getRandomLocation(World world) {
+    public Location getTagLocation(World world) {
         Random rand = new Random();
         int x = plugin.config.getInt("coordinates.x");
         int z = plugin.config.getInt("coordinates.z");

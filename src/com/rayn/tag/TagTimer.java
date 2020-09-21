@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 public class TagTimer implements Listener {
     
     static Main plugin;
+    
     public TagTimer(Main instance) {
         plugin = instance;
     }
@@ -28,7 +29,7 @@ public class TagTimer implements Listener {
         Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "3 seconds left."), length - 60);
         Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "2 seconds left."), length - 40);
         Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.getServer().broadcastMessage(ChatColor.AQUA + "1 seconds left."), length - 20);
-    
+        
         // ends tag
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + plugin.getItPlayer().getDisplayName()
@@ -50,7 +51,7 @@ public class TagTimer implements Listener {
             for (int i = 0; i < world.getPlayers().size(); i++) {
                 Player player = world.getPlayers().get(i);
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 0.5f);
-                player.sendTitle(ChatColor.BLUE + "3", null, 10,0, 10);
+                player.sendTitle(ChatColor.BLUE + "3", null, 10, 0, 10);
             }
         }, 40L);
         
@@ -58,7 +59,7 @@ public class TagTimer implements Listener {
             for (int i = 0; i < world.getPlayers().size(); i++) {
                 Player player = world.getPlayers().get(i);
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 0.5f);
-                player.sendTitle(ChatColor.BLUE + "2", null, 10,0, 10);
+                player.sendTitle(ChatColor.BLUE + "2", null, 10, 0, 10);
             }
         }, 60L);
         
@@ -66,7 +67,7 @@ public class TagTimer implements Listener {
             for (int i = 0; i < world.getPlayers().size(); i++) {
                 Player player = world.getPlayers().get(i);
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 0.5f);
-                player.sendTitle(ChatColor.BLUE + "1", null, 10,0, 10);
+                player.sendTitle(ChatColor.BLUE + "1", null, 10, 0, 10);
             }
         }, 80L);
         
@@ -74,9 +75,9 @@ public class TagTimer implements Listener {
             for (int i = 0; i < world.getPlayers().size(); i++) {
                 Player player = world.getPlayers().get(i);
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 1f);
-                player.sendTitle(ChatColor.BLUE + "Go!", null, 10,40, 20);
+                player.sendTitle(ChatColor.BLUE + "Go!", null, 10, 40, 20);
             }
         }, 100L);
-    
+        
     }
 }
