@@ -86,11 +86,12 @@ public class Main extends JavaPlugin implements Listener {
         for (int i = 0; i < world.getPlayers().size(); i++) {
             Player playerI = world.getPlayers().get(i);
             
-            Location oldLocation = tagPlayerManager.getLocation(playerI);
+            Location oldLocation = tagPlayerManager.getLocation(playerI.getUniqueId());
             if (oldLocation != null) {
                 playerI.teleport(oldLocation);
             }
             
+            playerI.setGameMode(GameMode.SURVIVAL);
             Bukkit.getScheduler().runTaskLater(this, () -> playerI.playSound(playerI.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 0.5f), 3);
         }
         
@@ -151,7 +152,7 @@ public class Main extends JavaPlugin implements Listener {
                         playerI.setGameMode(GameMode.SURVIVAL);
                         
                         // saves old location before teleporting
-                        tagPlayerManager.saveLocation(playerI);
+                        tagPlayerManager.saveLocation(playerI.getUniqueId());
                         
                         // teleports to the random block
                         highestBlock = worldBorderManager.findHighestBlock((int) randomLocation.getX(), (int) randomLocation.getZ(), world);
@@ -252,8 +253,8 @@ public class Main extends JavaPlugin implements Listener {
     
             } else if (args[0].equalsIgnoreCase("joingame")) {
                 Player player = (Player) sender;
-                if (tagPlayerManager.spectators.contains(player)) {
-                    tagPlayerManager.spectators.remove(player);
+                if (tagPlayerManager.spectators.contains(player.getUniqueId())) {
+                    tagPlayerManager.spectators.remove(player.getUniqueId());
                     player.teleport(highestBlock);
                     player.setGameMode(GameMode.SURVIVAL);
                     System.out.println(player.getDisplayName() + " is now playing.");
@@ -280,6 +281,7 @@ public class Main extends JavaPlugin implements Listener {
     }
     
     // makes person it if they are being tagged
+    // these ifs are really ugly
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
