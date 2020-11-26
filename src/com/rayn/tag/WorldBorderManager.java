@@ -14,6 +14,7 @@ public class WorldBorderManager {
     }
     
     // finds the highest block with the given x and z coordinates.
+    // yeah bukkit already has a method for this but i guess i made my own that's probably worse
     public Location findHighestBlock(int x, int z, World world) {
         boolean lookingForBlock = true;
         int i = 256;
