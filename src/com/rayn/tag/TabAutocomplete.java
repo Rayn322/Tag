@@ -21,7 +21,6 @@ public class TabAutocomplete implements TabCompleter {
             parameters.add("coordinates");
             
             return parameters;
-            
         }
         
         return null;
