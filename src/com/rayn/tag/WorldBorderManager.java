@@ -1,7 +1,6 @@
 package com.rayn.tag;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 
 import java.util.Random;
@@ -20,17 +19,12 @@ public class WorldBorderManager {
         int i = 256;
         
         while (lookingForBlock) {
-            if (world.getBlockAt(x, i, z).getBlockData().getMaterial().equals(Material.VOID_AIR)
-                    || world.getBlockAt(x, i, z).getBlockData().getMaterial().equals(Material.AIR)) {
+            if (world.getBlockAt(x, i, z).getBlockData().getMaterial().isSolid()) {
                 i--;
             } else {
                 lookingForBlock = false;
                 System.out.println("found a " + world.getBlockAt(x, i, z).getBlockData().getAsString() + " block at y = " + i);
-                Location top = world.getSpawnLocation();
-                top.setX(x + 0.5);
-                top.setY(i + 1);
-                top.setZ(z + 0.5);
-                return top;
+                return new Location(world, x + 0.5, i + 1, z + 0.5);
             }
         }
         
@@ -48,12 +42,6 @@ public class WorldBorderManager {
             z = rand.nextInt(5000);
         }
         
-        
-        Location location = world.getSpawnLocation();
-        location.setX(x);
-        location.setY(0);
-        location.setZ(z);
-        
-        return location;
+        return new Location(world, x, 0, z);
     }
 }

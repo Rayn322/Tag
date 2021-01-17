@@ -226,7 +226,7 @@ public class Main extends JavaPlugin implements Listener {
                 if (args.length > 1) {
                     int x;
                     int z;
-    
+                    
                     try {
                         x = Integer.parseInt(args[1]);
                         z = Integer.parseInt(args[2]);
@@ -237,20 +237,20 @@ public class Main extends JavaPlugin implements Listener {
                         sender.sendMessage(ChatColor.YELLOW + "Usage: /tag coordinates <x> <z>");
                         return true;
                     }
-    
+                    
                     config.set("coordinates.x", x);
                     config.set("coordinates.z", z);
                     config.set("use-random-location", false);
-    
+                    
                     sender.sendMessage(ChatColor.YELLOW + "Set coordinates to " + ChatColor.BLUE +
                             "X = " + x + ChatColor.YELLOW + " and " + ChatColor.BLUE + "Z = " + z + ".");
                 } else {
                     config.set("use-random-location", true);
                     sender.sendMessage(ChatColor.YELLOW + "Now uses random coordinates.");
                 }
-    
+                
                 return true;
-    
+                
             } else if (args[0].equalsIgnoreCase("joingame")) {
                 Player player = (Player) sender;
                 if (tagPlayerManager.spectators.contains(player.getUniqueId())) {
@@ -259,7 +259,7 @@ public class Main extends JavaPlugin implements Listener {
                     player.setGameMode(GameMode.SURVIVAL);
                     System.out.println(player.getDisplayName() + " is now playing.");
                 }
-            
+                
             } else {
                 sender.sendMessage(syntaxError);
                 
