@@ -19,7 +19,7 @@ public class WorldBorderManager {
         int i = 256;
         
         while (lookingForBlock) {
-            if (world.getBlockAt(x, i, z).getBlockData().getMaterial().isSolid()) {
+            if (world.getBlockAt(x, i, z).getBlockData().getMaterial().isAir()) {
                 i--;
             } else {
                 lookingForBlock = false;
