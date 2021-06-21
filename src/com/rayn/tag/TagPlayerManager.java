@@ -21,7 +21,7 @@ public class TagPlayerManager implements Listener {
     static Main plugin;
     protected List<UUID> spectators = new ArrayList<>();
     // creates lists for the players and their locations
-    protected List<UUID> players = new ArrayList<UUID>();
+    protected List<UUID> players = new ArrayList<>();
     protected List<Location> locations = new ArrayList<>();
     
     public TagPlayerManager(Main instance) {
