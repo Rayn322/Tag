@@ -59,8 +59,6 @@ public class Main extends JavaPlugin implements Listener {
     public void onDisable() {
     }
     
-    // Maybe this makes it possible for other plugins to mess with who is it.
-    // I'll just leave it. First time making my own getters and setters too while probably unnecessary.
     public Player getItPlayer() {
         return itPlayer;
     }
