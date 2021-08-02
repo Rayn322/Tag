@@ -12,9 +12,7 @@ public class Timer {
     public static void startTimer(World world, int length) {
         // convert minutes to ticks
         length = length * 1200;
-        
         Game.isSpawnProtected = true;
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Game.isSpawnProtected = false, 100L);
         
         // countdown
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> {
@@ -34,6 +32,7 @@ public class Timer {
         int finalLength = length;
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> {
             sendCountdown(world, "Go!", 1f);
+            Game.isSpawnProtected = false;
             scheduleGameEnd(finalLength);
         }, 100L);
     }
