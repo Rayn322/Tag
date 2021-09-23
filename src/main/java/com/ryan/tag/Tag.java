@@ -1,7 +1,10 @@
 package com.ryan.tag;
 
 import com.ryan.tag.bstats.Metrics;
+import com.ryan.tag.command.TagCommand;
 import com.ryan.tag.listener.PreventDamage;
+import com.ryan.tag.listener.TagPlayer;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Tag extends JavaPlugin {
@@ -17,9 +20,19 @@ public final class Tag extends JavaPlugin {
         plugin = this;
         new Metrics(this, 8787);
         registerEvents();
+        registerCommands();
     }
     
     private void registerEvents() {
-        getServer().getPluginManager().registerEvents(new PreventDamage(), this);
+        PluginManager pluginManager = getServer().getPluginManager();
+        pluginManager.registerEvents(new PreventDamage(), this);
+        pluginManager.registerEvents(new TagPlayer(), this);
+    }
+    
+    @SuppressWarnings("ConstantConditions")
+    private void registerCommands() {
+        TagCommand tagCommand = new TagCommand();
+        getCommand("tag").setExecutor(tagCommand);
+        getCommand("tag").setTabCompleter(tagCommand);
     }
 }

@@ -17,17 +17,27 @@ public class TagCommand implements TabExecutor {
     
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (ArrayUtils.isNotEmpty(args)) {
+        if (ArrayUtils.isEmpty(args)) {
             sender.sendMessage(ChatColor.RED + "No arguments provided!");
         }
         
         if (sender instanceof Player) {
             if (args[0].equalsIgnoreCase("start")) {
                 // TODO: allow for custom times
-                Game.startGame((Player) sender, 5);
+                if (Game.isPlaying) {
+                    sender.sendMessage(ChatColor.RED + "A game is already being played!");
+                } else {
+                    Game.startGame((Player) sender, 1);
+                }
+                
             } else if (args[0].equalsIgnoreCase("stop")) {
-                sender.sendMessage(ChatColor.RED + "Force stopping game!");
-                Game.stopGame();
+                if (Game.isPlaying) {
+                    sender.sendMessage(ChatColor.RED + "Stopping the game!");
+                    Game.stopGame();
+                } else {
+                    sender.sendMessage(ChatColor.RED + "No game is being played!");
+                }
+                
             } else {
                 sender.sendMessage(ChatColor.RED + "Not a valid argument!");
             }

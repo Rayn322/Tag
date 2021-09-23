@@ -24,7 +24,7 @@ repositories {
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.17-R0.1-SNAPSHOT'
-    compileOnly 'org.jetbrains:annotations:16.0.2'
+    compileOnly 'org.jetbrains:annotations:22.0.0'
 }
 
 processResources {
@@ -37,5 +37,5 @@ processResources {
 task copyJar(type: Copy) {
     dependsOn(build)
     from file("${buildDir}/libs/Tag-1.0.jar")
-    into file("C:/Users/Ryan/Documents/MinecraftServers/Paper-1.17/plugins")
+    into file("C:/Users/Ryan/Documents/MinecraftServers/Paper-1.17.1/plugins")
 }

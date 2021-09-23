@@ -39,6 +39,8 @@ public class Timer {
     
     private static void scheduleGameEnd(int length) {
         // countdown
+        
+        // TODO: make it less repetitive
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "30 seconds left."), length - 600);
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "15 seconds left."), length - 300);
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "10 seconds left."), length - 200);
@@ -46,13 +48,13 @@ public class Timer {
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "4 seconds left."), length - 80);
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "3 seconds left."), length - 60);
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "2 seconds left."), length - 40);
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "1 seconds left."), length - 20);
+        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "1 second left."), length - 20);
         
         // ends tag
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> {
             Player player = Bukkit.getPlayer(Game.getItPlayer());
             if (player != null) {
-                Bukkit.getServer().broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.GREEN + " was it at the end!");
+                Bukkit.broadcastMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + player.getName() + ChatColor.RESET + "" + ChatColor.GREEN + " was it at the end!");
             } else {
                 Bukkit.getServer().broadcastMessage(ChatColor.RED + "Error getting player who was it.");
             }
