@@ -27,13 +27,13 @@ public class TagCommand implements TabExecutor {
                 if (Game.isPlaying) {
                     sender.sendMessage(ChatColor.RED + "A game is already being played!");
                 } else {
-                    Game.startGame((Player) sender, 1);
+                    Game.start((Player) sender);
                 }
                 
             } else if (args[0].equalsIgnoreCase("stop")) {
                 if (Game.isPlaying) {
                     sender.sendMessage(ChatColor.RED + "Stopping the game!");
-                    Game.stopGame();
+                    Game.stop();
                 } else {
                     sender.sendMessage(ChatColor.RED + "No game is being played!");
                 }

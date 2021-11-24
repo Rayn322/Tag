@@ -1,5 +1,6 @@
 package com.ryan.tag.gameplay;
 
+import com.ryan.tag.config.TagSettings;
 import com.ryan.tag.setup.PostGame;
 import com.ryan.tag.setup.PreGame;
 import org.bukkit.*;
@@ -36,15 +37,15 @@ public class Game {
      * @param itPlayer The player to start as it.
      * @param length   Length in minutes.
      */
-    public static void startGame(Player itPlayer, int length) {
-        Bukkit.broadcastMessage(ChatColor.GREEN + "Starting a " + ChatColor.YELLOW + length + ChatColor.GREEN + " minute game of tag!");
+    public static void start(Player itPlayer) {
+        Bukkit.broadcastMessage(ChatColor.GREEN + "Starting a " + ChatColor.YELLOW + TagSettings.timerLength + ChatColor.GREEN + " minute game of tag!");
         Bukkit.broadcastMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + itPlayer.getName() + ChatColor.RESET + "" + ChatColor.GREEN + " will start as it!");
         setItPlayer(itPlayer.getUniqueId());
-        PreGame.setup(itPlayer.getWorld(), length);
         world = itPlayer.getWorld();
+        PreGame.setup(itPlayer.getWorld());
     }
     
-    public static void stopGame() {
+    public static void stop() {
         PostGame.cleanup(world);
     }
     
@@ -62,7 +63,7 @@ public class Game {
         for (Player player : tagged.getWorld().getPlayers()) {
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
         }
-    
+        
         Bukkit.broadcastMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + tagged.getName() + ChatColor.RESET + "" + ChatColor.GREEN + " is now it!");
         setItPlayer(tagged);
     }

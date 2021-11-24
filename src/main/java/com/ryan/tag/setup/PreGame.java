@@ -1,5 +1,6 @@
 package com.ryan.tag.setup;
 
+import com.ryan.tag.config.TagSettings;
 import com.ryan.tag.gameplay.Game;
 import com.ryan.tag.gameplay.Timer;
 import com.ryan.tag.util.LocationUtil;
@@ -10,9 +11,10 @@ import org.bukkit.entity.Player;
 
 public class PreGame {
     
-    public static void setup(World world, int length) {
+    public static void setup(World world) {
         Game.isPlaying = true;
-        WorldBorderUtil.setBorder(world, 0, 0, 50);
+        Game.isSpawnProtected = true;
+        WorldBorderUtil.setBorder(world, TagSettings.spawnX, TagSettings.spawnZ, TagSettings.borderLength);
     
         // TODO: save location and possibly inventory. maybe even potion effects if you want to be fancy.
         for (Player player : world.getPlayers()) {
@@ -21,6 +23,6 @@ public class PreGame {
             player.setGameMode(GameMode.SURVIVAL);
         }
         
-        Timer.startTimer(world, length);
+        Timer.startTimer(world);
     }
 }

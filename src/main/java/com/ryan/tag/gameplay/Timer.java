@@ -1,6 +1,7 @@
 package com.ryan.tag.gameplay;
 
 import com.ryan.tag.Tag;
+import com.ryan.tag.config.TagSettings;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -9,38 +10,25 @@ import org.bukkit.entity.Player;
 
 public class Timer {
     
-    public static void startTimer(World world, int length) {
+    public static void startTimer(World world) {
         // convert minutes to ticks
-        length = length * 1200;
-        Game.isSpawnProtected = true;
+        int length = TagSettings.timerLength * 1200;
         
         // countdown
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> {
-            sendCountdown(world, "3", 0.5f);
-            
-        }, 40L);
-        
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> {
-            sendCountdown(world, "2", 0.5f);
-            
-        }, 60L);
-        
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> {
-            sendCountdown(world, "1", 0.5f);
-        }, 80L);
-        
-        int finalLength = length;
+        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> sendCountdown(world, "3", 0.5f), 40L);
+        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> sendCountdown(world, "2", 0.5f), 60L);
+        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> sendCountdown(world, "1", 0.5f), 80L);
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> {
             sendCountdown(world, "Go!", 1f);
             Game.isSpawnProtected = false;
-            scheduleGameEnd(finalLength);
+            scheduleGameEnd(length);
         }, 100L);
     }
     
     private static void scheduleGameEnd(int length) {
         // countdown
         
-        // TODO: make it less repetitive
+        // TODO: simplify this
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "30 seconds left."), length - 600);
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "15 seconds left."), length - 300);
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "10 seconds left."), length - 200);
@@ -53,13 +41,14 @@ public class Timer {
         // ends tag
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> {
             Player player = Bukkit.getPlayer(Game.getItPlayer());
+            
             if (player != null) {
                 Bukkit.broadcastMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + player.getName() + ChatColor.RESET + "" + ChatColor.GREEN + " was it at the end!");
             } else {
                 Bukkit.getServer().broadcastMessage(ChatColor.RED + "Error getting player who was it.");
             }
             
-            Game.stopGame();
+            Game.stop();
         }, length);
     }
     
