@@ -49,7 +49,7 @@ public class Game {
         PostGame.cleanup(world);
     }
     
-    // TODO: send chat message and change boss bar
+    // TODO: change boss bar
     @SuppressWarnings("ConstantConditions")
     public static void handlePlayerTag(Player tagged, Player attacker) {
         ItemStack itHelmet = new ItemStack(Material.LEATHER_HELMET);
@@ -60,7 +60,8 @@ public class Game {
         tagged.getInventory().setHelmet(itHelmet);
         attacker.getInventory().setHelmet(null);
         
-        for (Player player : tagged.getWorld().getPlayers()) {
+        // TODO: experiment with new sounds; different sounds for different players
+        for (Player player : world.getPlayers()) {
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
         }
         

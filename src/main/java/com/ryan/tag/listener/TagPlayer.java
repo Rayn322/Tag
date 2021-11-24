@@ -12,11 +12,9 @@ public class TagPlayer implements Listener {
     @EventHandler
     private void onPlayerHitPlayer(EntityDamageByEntityEvent event) {
         if (!Game.isPlaying) return;
-        
         if (Game.isSpawnProtected) {
             event.setCancelled(true);
         } else if (playerIsTaggingPlayer(event.getEntity(), event.getDamager())) {
-            // TODO: is this all?
             Game.handlePlayerTag((Player) event.getEntity(), (Player) event.getDamager());
         }
     }

@@ -19,30 +19,31 @@ public class TagCommand implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (ArrayUtils.isEmpty(args)) {
             sender.sendMessage(ChatColor.RED + "No arguments provided!");
+            return true;
         }
         
-        if (sender instanceof Player) {
-            if (args[0].equalsIgnoreCase("start")) {
-                // TODO: allow for custom times
-                if (Game.isPlaying) {
-                    sender.sendMessage(ChatColor.RED + "A game is already being played!");
-                } else {
-                    Game.start((Player) sender);
-                }
-                
-            } else if (args[0].equalsIgnoreCase("stop")) {
-                if (Game.isPlaying) {
-                    sender.sendMessage(ChatColor.RED + "Stopping the game!");
-                    Game.stop();
-                } else {
-                    sender.sendMessage(ChatColor.RED + "No game is being played!");
-                }
-                
-            } else {
-                sender.sendMessage(ChatColor.RED + "Not a valid argument!");
-            }
-        } else {
+        if (!(sender instanceof Player)) {
             sender.sendMessage(ChatColor.RED + "Console cannot do this!");
+        }
+        
+        if (args[0].equalsIgnoreCase("start")) {
+            // TODO: allow for custom times
+            if (Game.isPlaying) {
+                sender.sendMessage(ChatColor.RED + "A game is already being played!");
+            } else {
+                Game.start((Player) sender);
+            }
+            
+        } else if (args[0].equalsIgnoreCase("stop")) {
+            if (Game.isPlaying) {
+                sender.sendMessage(ChatColor.RED + "Stopping the game!");
+                Game.stop();
+            } else {
+                sender.sendMessage(ChatColor.RED + "No game is being played!");
+            }
+            
+        } else {
+            sender.sendMessage(ChatColor.RED + "Not a valid argument!");
         }
         
         return true;
