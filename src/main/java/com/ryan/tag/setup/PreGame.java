@@ -21,6 +21,8 @@ public class PreGame {
             player.teleport(LocationUtil.getSpawnpoint(world));
             player.getInventory().clear();
             player.setGameMode(GameMode.SURVIVAL);
+            player.setHealth(20);
+            player.setFoodLevel(20);
         }
         
         Timer.startTimer(world);

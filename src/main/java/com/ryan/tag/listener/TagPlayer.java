@@ -17,6 +17,7 @@ public class TagPlayer implements Listener {
         } else if (playerIsTaggingPlayer(event.getEntity(), event.getDamager())) {
             Game.handlePlayerTag((Player) event.getEntity(), (Player) event.getDamager());
         }
+        event.setDamage(0);
     }
     
     private boolean playerIsTaggingPlayer(Entity tagged, Entity attacker) {
