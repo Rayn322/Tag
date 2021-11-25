@@ -8,11 +8,15 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+
 public class Timer {
+    
+    private static final ArrayList<Integer> tasks = new ArrayList<>();
     
     public static void startTimer(World world) {
         // convert minutes to ticks
-        int length = TagSettings.timerLength * 1200;
+        int length = (int) (TagSettings.timerLength * 1200);
         
         // countdown
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> sendCountdown(world, "3", 0.5f), 40L);
@@ -25,21 +29,27 @@ public class Timer {
         }, 100L);
     }
     
+    public static void stopTimer() {
+        for (int task : tasks) {
+            Bukkit.getScheduler().cancelTask(task);
+        }
+    }
+    
     private static void scheduleGameEnd(int length) {
         // countdown
         
         // TODO: simplify this
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "30 seconds left."), length - 600);
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "15 seconds left."), length - 300);
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "10 seconds left."), length - 200);
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "5 seconds left."), length - 100);
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "4 seconds left."), length - 80);
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "3 seconds left."), length - 60);
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "2 seconds left."), length - 40);
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "1 second left."), length - 20);
+        tasks.add(Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "30 seconds left."), length - 600).getTaskId());
+        tasks.add(Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "15 seconds left."), length - 300).getTaskId());
+        tasks.add(Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "10 seconds left."), length - 200).getTaskId());
+        tasks.add(Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "5 seconds left."), length - 100).getTaskId());
+        tasks.add(Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "4 seconds left."), length - 80).getTaskId());
+        tasks.add(Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "3 seconds left."), length - 60).getTaskId());
+        tasks.add(Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "2 seconds left."), length - 40).getTaskId());
+        tasks.add(Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "1 second left."), length - 20).getTaskId());
         
         // ends tag
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> {
+        tasks.add(Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> {
             Player player = Bukkit.getPlayer(Game.getItPlayer());
             
             if (player != null) {
@@ -49,10 +59,13 @@ public class Timer {
             }
             
             Game.stop();
-        }, length);
+        }, length).getTaskId());
     }
     
     private static void sendCountdown(World world, String message, float pitch) {
+        // in case game is stopped during initial countdown
+        if (!Game.isPlaying) return;
+        
         for (Player player : world.getPlayers()) {
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, pitch);
             player.sendTitle(ChatColor.GREEN + message, null, 10, 40, 20);

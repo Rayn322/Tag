@@ -2,6 +2,7 @@ package com.ryan.tag;
 
 import com.ryan.tag.bstats.Metrics;
 import com.ryan.tag.command.TagCommand;
+import com.ryan.tag.config.TagSettings;
 import com.ryan.tag.listener.PreventDamage;
 import com.ryan.tag.listener.TagPlayer;
 import org.bukkit.plugin.PluginManager;
@@ -21,6 +22,16 @@ public final class Tag extends JavaPlugin {
         new Metrics(this, 8787);
         registerEvents();
         registerCommands();
+        
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+        TagSettings.readFromConfig();
+    }
+    
+    @Override
+    public void onDisable() {
+        TagSettings.writeToConfig();
+        saveConfig();
     }
     
     private void registerEvents() {

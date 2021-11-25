@@ -1,6 +1,7 @@
 package com.ryan.tag.setup;
 
 import com.ryan.tag.gameplay.Game;
+import com.ryan.tag.gameplay.Timer;
 import com.ryan.tag.util.WorldBorderUtil;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -11,6 +12,7 @@ public class PostGame {
     public static void cleanup(World world) {
         Game.isPlaying = false;
         WorldBorderUtil.resetBorder(world);
+        Timer.stopTimer();
         
         for (Player player : world.getPlayers()) {
             player.getInventory().clear();
@@ -19,5 +21,7 @@ public class PostGame {
                 player.removePotionEffect(effect.getType());
             }
         }
+        
+        PlayerDataSaver.restoreAllData();
     }
 }

@@ -1,0 +1,6 @@
+timerLength: 1
+infiniteGame: false
+borderLength: 50
+spawnX: 0
+spawnZ: 0
+randomizeLocation: false

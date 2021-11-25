@@ -9,16 +9,31 @@ import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import java.util.Random;
+
 public class PreGame {
     
     public static void setup(World world) {
         Game.isPlaying = true;
         Game.isSpawnProtected = true;
-        WorldBorderUtil.setBorder(world, TagSettings.spawnX, TagSettings.spawnZ, TagSettings.borderLength);
+        int spawnX;
+        int spawnZ;
+        
+        if (TagSettings.randomizeLocation) {
+            Random random = new Random();
+            spawnX = random.nextInt(10000) - 5000;
+            spawnZ = random.nextInt(10000) - 5000;
+        } else {
+            spawnX = TagSettings.spawnX;
+            spawnZ = TagSettings.spawnZ;
+        }
+    
+        WorldBorderUtil.setBorder(world, spawnX, spawnZ, TagSettings.borderLength);
     
         // TODO: save location and possibly inventory. maybe even potion effects if you want to be fancy.
         for (Player player : world.getPlayers()) {
-            player.teleport(LocationUtil.getSpawnpoint(world));
+            PlayerDataSaver.saveData(player);
+            player.teleport(LocationUtil.getSpawnpoint(world, spawnX, spawnZ));
             player.getInventory().clear();
             player.setGameMode(GameMode.SURVIVAL);
             player.setHealth(20);

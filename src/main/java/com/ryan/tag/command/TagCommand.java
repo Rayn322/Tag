@@ -52,7 +52,7 @@ public class TagCommand implements TabExecutor {
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
-        if (args.length == 1) return Arrays.asList("start", "stop");
+        if (args.length == 1) return Arrays.asList("start", "stop", "help", "location", "bordersize", "length");
         
         return null;
     }
