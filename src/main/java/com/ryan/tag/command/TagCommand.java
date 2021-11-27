@@ -26,7 +26,7 @@ public class TagCommand implements TabExecutor {
             ChatColor.YELLOW + "/tag length <seconds>" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Sets the length of the game in minutes. Set the length to 0 for an infinite game.",
             ChatColor.YELLOW + "/tag location <x> <z>" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Sets the location of the game.",
             ChatColor.YELLOW + "/tag randomlocation <true/false>" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Sets whether the location of the game is random.",
-            ChatColor.YELLOW + "/tag bordersize <size>" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Sets the side length of the border in blocks.",
+            ChatColor.YELLOW + "/tag border <size>" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Sets the side length of the border in blocks.",
             ChatColor.YELLOW + "/tag settings" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Views the current settings.",
             ChatColor.DARK_BLUE + "-----------------------------------------------------",
     };
@@ -102,7 +102,7 @@ public class TagCommand implements TabExecutor {
                 sender.sendMessage(ChatColor.RED + "No value provided!");
             }
             
-        } else if (args[0].equalsIgnoreCase("bordersize")) {
+        } else if (args[0].equalsIgnoreCase("border")) {
             try {
                 int size = Integer.parseInt(args[1]);
                 if (size > 0) {
@@ -149,7 +149,7 @@ public class TagCommand implements TabExecutor {
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
-        if (args.length == 1) return Arrays.asList("start", "stop", "help", "length", "location", "randomlocation", "bordersize", "settings");
+        if (args.length == 1) return Arrays.asList("start", "stop", "help", "length", "location", "randomlocation", "border", "settings");
         if (args[0].equalsIgnoreCase("randomlocation") && args.length == 2) return Arrays.asList("true", "false");
         
         return null;
