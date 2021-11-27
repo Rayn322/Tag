@@ -2,6 +2,7 @@ package com.ryan.tag;
 
 import com.ryan.tag.bstats.Metrics;
 import com.ryan.tag.command.TagCommand;
+import com.ryan.tag.config.SettingsGUI;
 import com.ryan.tag.config.TagSettings;
 import com.ryan.tag.gameplay.TagInfoDisplay;
 import com.ryan.tag.listener.PreventDamage;
@@ -41,6 +42,7 @@ public final class Tag extends JavaPlugin {
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new PreventDamage(), this);
         pluginManager.registerEvents(new TagPlayer(), this);
+        pluginManager.registerEvents(new SettingsGUI(), this);
     }
     
     @SuppressWarnings("ConstantConditions")

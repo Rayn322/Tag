@@ -35,6 +35,10 @@ public class TagSettings {
         return timerLength;
     }
     
+    public static String getTimerLengthAsString() {
+        // TODO: do the thing and make sure to remove decimal if possible
+    }
+    
     public static void setTimerLength(double timerLength) {
         TagSettings.timerLength = timerLength;
         writeToConfig();
