@@ -20,7 +20,11 @@ public class Game {
     private static UUID itPlayer;
     private static World world;
     
-    public static UUID getItPlayer() {
+    public static Player getItPlayer() {
+        return Bukkit.getPlayer(itPlayer);
+    }
+    
+    public static UUID getItPlayerUUID() {
         return itPlayer;
     }
     
@@ -53,7 +57,7 @@ public class Game {
     }
     
     public static void stop() {
-        Player player = Bukkit.getPlayer(Game.getItPlayer());
+        Player player = Game.getItPlayer();
         
         if (player != null) {
             Bukkit.broadcast(Component.text(ChatColor.YELLOW + "" + ChatColor.BOLD + player.getName() + ChatColor.RESET + "" + ChatColor.GREEN + " was it at the end!"));
@@ -66,12 +70,7 @@ public class Game {
     
     // TODO: change boss bar
     public static void handlePlayerTag(Player tagged, Player attacker) {
-        ItemStack itHelmet = new ItemStack(Material.LEATHER_HELMET);
-        LeatherArmorMeta meta = (LeatherArmorMeta) itHelmet.getItemMeta();
-        meta.setColor(Color.RED);
-        itHelmet.setItemMeta(meta);
-        
-        tagged.getInventory().setHelmet(itHelmet);
+        giveItPlayerHelmet(tagged);
         attacker.getInventory().setHelmet(null);
         
         // TODO: experiment with new sounds; different sounds for different players
@@ -81,6 +80,15 @@ public class Game {
         
         Bukkit.broadcast(Component.text(ChatColor.YELLOW + "" + ChatColor.BOLD + tagged.getName() + ChatColor.RESET + "" + ChatColor.GREEN + " is now it!"));
         setItPlayer(tagged);
-        TagInfoDisplay.sendItPlayerTitle();
+        TagInfoDisplay.setItPlayerNametag();
+    }
+    
+    public static void giveItPlayerHelmet(Player player) {
+        ItemStack itHelmet = new ItemStack(Material.LEATHER_HELMET);
+        LeatherArmorMeta meta = (LeatherArmorMeta) itHelmet.getItemMeta();
+        meta.setColor(Color.RED);
+        itHelmet.setItemMeta(meta);
+    
+        player.getInventory().setHelmet(itHelmet);
     }
 }

@@ -3,6 +3,7 @@ package com.ryan.tag;
 import com.ryan.tag.bstats.Metrics;
 import com.ryan.tag.command.TagCommand;
 import com.ryan.tag.config.TagSettings;
+import com.ryan.tag.gameplay.TagInfoDisplay;
 import com.ryan.tag.listener.PreventDamage;
 import com.ryan.tag.listener.TagPlayer;
 import org.bukkit.plugin.PluginManager;
@@ -26,10 +27,12 @@ public final class Tag extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveConfig();
         TagSettings.readFromConfig();
+        TagInfoDisplay.createTeam();
     }
     
     @Override
     public void onDisable() {
+        TagInfoDisplay.deleteTeam();
         TagSettings.writeToConfig();
         saveConfig();
     }

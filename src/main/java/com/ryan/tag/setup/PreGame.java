@@ -40,7 +40,9 @@ public class PreGame {
             player.setFoodLevel(20);
         }
         
+        Game.giveItPlayerHelmet(Game.getItPlayer());
         TagInfoDisplay.sendItPlayerTitle();
+        TagInfoDisplay.setItPlayerNametag();
         Timer.startTimer(world);
     }
 }

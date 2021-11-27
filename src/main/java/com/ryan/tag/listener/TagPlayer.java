@@ -21,6 +21,6 @@ public class TagPlayer implements Listener {
     }
     
     private boolean playerIsTaggingPlayer(Entity tagged, Entity attacker) {
-        return tagged instanceof Player && attacker instanceof Player && attacker.getUniqueId() == Game.getItPlayer();
+        return tagged instanceof Player && attacker instanceof Player && attacker == Game.getItPlayer();
     }
 }
