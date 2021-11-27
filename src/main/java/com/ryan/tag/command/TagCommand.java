@@ -2,7 +2,9 @@ package com.ryan.tag.command;
 
 import com.ryan.tag.config.TagSettings;
 import com.ryan.tag.gameplay.Game;
+import net.kyori.adventure.text.Component;
 import org.apache.commons.lang.ArrayUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -51,7 +53,7 @@ public class TagCommand implements TabExecutor {
             
         } else if (args[0].equalsIgnoreCase("stop")) {
             if (Game.isPlaying) {
-                sender.sendMessage(ChatColor.RED + "Stopping the game!");
+                Bukkit.broadcast(Component.text(ChatColor.RED + "Game stopped by " + ChatColor.YELLOW + sender.getName() + ChatColor.RED + "."));
                 Game.stop();
             } else {
                 sender.sendMessage(ChatColor.RED + "No game is being played!");

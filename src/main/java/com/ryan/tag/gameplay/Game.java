@@ -3,6 +3,7 @@ package com.ryan.tag.gameplay;
 import com.ryan.tag.config.TagSettings;
 import com.ryan.tag.setup.PostGame;
 import com.ryan.tag.setup.PreGame;
+import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -31,30 +32,39 @@ public class Game {
         Game.itPlayer = itPlayer.getUniqueId();
     }
     
-    /**
-     * Starts the game of tag.
-     *
-     * @param itPlayer The player to start as it.
-     * @param length   Length in minutes.
-     */
+    public static World getWorld() {
+        return world;
+    }
+    
+    private static void setWorld(World world) {
+        Game.world = world;
+    }
+    
     public static void start(Player itPlayer) {
         if (TagSettings.isInfiniteGame()) {
-            Bukkit.broadcastMessage(ChatColor.GREEN + "Starting an infinite game of tag!");
+            Bukkit.broadcast(Component.text(ChatColor.GREEN + "Starting an infinite game of tag!"));
         } else {
-            Bukkit.broadcastMessage(ChatColor.GREEN + "Starting a " + ChatColor.YELLOW + TagSettings.getTimerLength() + ChatColor.GREEN + " minute game of tag!");
+            Bukkit.broadcast(Component.text(ChatColor.GREEN + "Starting a " + ChatColor.YELLOW + TagSettings.getTimerLength() + ChatColor.GREEN + " minute game of tag!"));
         }
-        Bukkit.broadcastMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + itPlayer.getName() + ChatColor.RESET + "" + ChatColor.GREEN + " will start as it!");
+        Bukkit.broadcast(Component.text(ChatColor.YELLOW + "" + ChatColor.BOLD + itPlayer.getName() + ChatColor.RESET + "" + ChatColor.GREEN + " will start as it!"));
         setItPlayer(itPlayer.getUniqueId());
-        world = itPlayer.getWorld();
+        setWorld(itPlayer.getWorld());
         PreGame.setup(itPlayer.getWorld());
     }
     
     public static void stop() {
+        Player player = Bukkit.getPlayer(Game.getItPlayer());
+        
+        if (player != null) {
+            Bukkit.broadcast(Component.text(ChatColor.YELLOW + "" + ChatColor.BOLD + player.getName() + ChatColor.RESET + "" + ChatColor.GREEN + " was it at the end!"));
+        } else {
+            Bukkit.getServer().broadcast(Component.text(ChatColor.RED + "Error getting player who was it."));
+        }
+        
         PostGame.cleanup(world);
     }
     
     // TODO: change boss bar
-    @SuppressWarnings("ConstantConditions")
     public static void handlePlayerTag(Player tagged, Player attacker) {
         ItemStack itHelmet = new ItemStack(Material.LEATHER_HELMET);
         LeatherArmorMeta meta = (LeatherArmorMeta) itHelmet.getItemMeta();
@@ -69,7 +79,8 @@ public class Game {
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
         }
         
-        Bukkit.broadcastMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + tagged.getName() + ChatColor.RESET + "" + ChatColor.GREEN + " is now it!");
+        Bukkit.broadcast(Component.text(ChatColor.YELLOW + "" + ChatColor.BOLD + tagged.getName() + ChatColor.RESET + "" + ChatColor.GREEN + " is now it!"));
         setItPlayer(tagged);
+        TagInfoDisplay.sendItPlayerTitle();
     }
 }

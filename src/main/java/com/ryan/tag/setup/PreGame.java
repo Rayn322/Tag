@@ -2,6 +2,7 @@ package com.ryan.tag.setup;
 
 import com.ryan.tag.config.TagSettings;
 import com.ryan.tag.gameplay.Game;
+import com.ryan.tag.gameplay.TagInfoDisplay;
 import com.ryan.tag.gameplay.Timer;
 import com.ryan.tag.util.LocationUtil;
 import com.ryan.tag.util.WorldBorderUtil;
@@ -39,6 +40,7 @@ public class PreGame {
             player.setFoodLevel(20);
         }
         
+        TagInfoDisplay.sendItPlayerTitle();
         Timer.startTimer(world);
     }
 }

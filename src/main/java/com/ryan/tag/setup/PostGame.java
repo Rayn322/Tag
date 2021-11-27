@@ -12,7 +12,6 @@ public class PostGame {
     public static void cleanup(World world) {
         Game.isPlaying = false;
         WorldBorderUtil.resetBorder(world);
-        Timer.stopTimer();
         
         for (Player player : world.getPlayers()) {
             player.getInventory().clear();
@@ -21,7 +20,7 @@ public class PostGame {
                 player.removePotionEffect(effect.getType());
             }
         }
-        
+        Timer.stopTimer();
         PlayerDataSaver.restoreAllData();
     }
 }

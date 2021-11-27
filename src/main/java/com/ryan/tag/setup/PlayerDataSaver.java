@@ -8,15 +8,15 @@ import java.util.UUID;
 
 public class PlayerDataSaver {
     
-    private static final HashMap<UUID, PlayerData> playerLocations = new HashMap<>();
+    private static final HashMap<UUID, PlayerData> playerDataMap = new HashMap<>();
     
     public static void saveData(Player player) {
-        PlayerData playerData = new PlayerData(player.getHealth(), player.getFoodLevel(), player.getLevel(), player.getExp(), player.getLocation(), player.getInventory().getContents());
-        playerLocations.put(player.getUniqueId(), playerData);
+        PlayerData playerData = new PlayerData(player.getHealth(), player.getFoodLevel(), player.getLevel(), player.getExp(), player.getLocation(), player.getInventory().getContents(), player.getGameMode());
+        playerDataMap.put(player.getUniqueId(), playerData);
     }
     
     public static PlayerData getData(UUID uuid) {
-        return playerLocations.get(uuid);
+        return playerDataMap.get(uuid);
     }
     
     // TODO: deal with players logging out or logging in during the game
@@ -31,13 +31,14 @@ public class PlayerDataSaver {
             player.setExp(playerData.getExp());
             player.teleport(playerData.getLocation());
             player.getInventory().setContents(playerData.getInventory());
+            player.setGameMode(playerData.getGameMode());
         }
     }
     
     public static void restoreAllData() {
-        for (UUID uuid : playerLocations.keySet()) {
+        for (UUID uuid : playerDataMap.keySet()) {
             restoreData(uuid);
         }
-        playerLocations.clear();
+        playerDataMap.clear();
     }
 }
