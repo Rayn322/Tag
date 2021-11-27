@@ -44,6 +44,5 @@ public final class Tag extends JavaPlugin {
     private void registerCommands() {
         TagCommand tagCommand = new TagCommand();
         getCommand("tag").setExecutor(tagCommand);
-        getCommand("tag").setTabCompleter(tagCommand);
     }
 }

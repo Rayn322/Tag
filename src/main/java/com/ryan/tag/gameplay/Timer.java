@@ -15,9 +15,6 @@ public class Timer {
     private static final ArrayList<Integer> tasks = new ArrayList<>();
     
     public static void startTimer(World world) {
-        // convert minutes to ticks
-        int length = (int) (TagSettings.timerLength * 1200);
-        
         // countdown
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> sendCountdown(world, "3", 0.5f), 40L);
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> sendCountdown(world, "2", 0.5f), 60L);
@@ -25,13 +22,17 @@ public class Timer {
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> {
             sendCountdown(world, "Go!", 1f);
             Game.isSpawnProtected = false;
-            scheduleGameEnd(length);
+            if (!TagSettings.isInfiniteGame()) {
+                // convert minutes to ticks
+                int length = (int) (TagSettings.getTimerLength() * 1200);
+                scheduleGameEnd(length);
+            }
         }, 100L);
     }
     
     public static void stopTimer() {
-        for (int task : tasks) {
-            Bukkit.getScheduler().cancelTask(task);
+        for (int id : tasks) {
+            Bukkit.getScheduler().cancelTask(id);
         }
     }
     

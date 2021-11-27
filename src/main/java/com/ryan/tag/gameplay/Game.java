@@ -38,7 +38,11 @@ public class Game {
      * @param length   Length in minutes.
      */
     public static void start(Player itPlayer) {
-        Bukkit.broadcastMessage(ChatColor.GREEN + "Starting a " + ChatColor.YELLOW + TagSettings.timerLength + ChatColor.GREEN + " minute game of tag!");
+        if (TagSettings.isInfiniteGame()) {
+            Bukkit.broadcastMessage(ChatColor.GREEN + "Starting an infinite game of tag!");
+        } else {
+            Bukkit.broadcastMessage(ChatColor.GREEN + "Starting a " + ChatColor.YELLOW + TagSettings.getTimerLength() + ChatColor.GREEN + " minute game of tag!");
+        }
         Bukkit.broadcastMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + itPlayer.getName() + ChatColor.RESET + "" + ChatColor.GREEN + " will start as it!");
         setItPlayer(itPlayer.getUniqueId());
         world = itPlayer.getWorld();

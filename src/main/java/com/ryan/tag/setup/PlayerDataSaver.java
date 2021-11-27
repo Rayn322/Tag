@@ -1,6 +1,5 @@
 package com.ryan.tag.setup;
 
-import com.ryan.tag.Tag;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -20,6 +19,7 @@ public class PlayerDataSaver {
         return playerLocations.get(uuid);
     }
     
+    // TODO: deal with players logging out or logging in during the game
     private static void restoreData(UUID uuid) {
         PlayerData playerData = getData(uuid);
         Player player = Bukkit.getPlayer(uuid);
@@ -35,7 +35,6 @@ public class PlayerDataSaver {
     }
     
     public static void restoreAllData() {
-        Tag.getPlugin().getLogger().info(playerLocations.toString());
         for (UUID uuid : playerLocations.keySet()) {
             restoreData(uuid);
         }

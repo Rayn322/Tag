@@ -41,15 +41,4 @@ public class WorldBorderUtil {
     public static void resetBorder(World world) {
         world.getWorldBorder().reset();
     }
-    
-    /**
-     * Gets the {@link Location} of the center of the WorldBorder
-     *
-     * @param world The world in question
-     * @return The {@link Location} of the center
-     */
-    public static Location getCenter(World world) {
-        return world.getWorldBorder().getCenter();
-    }
-    
 }

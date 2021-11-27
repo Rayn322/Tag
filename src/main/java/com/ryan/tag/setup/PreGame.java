@@ -19,18 +19,17 @@ public class PreGame {
         int spawnX;
         int spawnZ;
         
-        if (TagSettings.randomizeLocation) {
+        if (TagSettings.doesRandomizeLocation()) {
             Random random = new Random();
             spawnX = random.nextInt(10000) - 5000;
             spawnZ = random.nextInt(10000) - 5000;
         } else {
-            spawnX = TagSettings.spawnX;
-            spawnZ = TagSettings.spawnZ;
+            spawnX = TagSettings.getSpawnX();
+            spawnZ = TagSettings.getSpawnZ();
         }
     
-        WorldBorderUtil.setBorder(world, spawnX, spawnZ, TagSettings.borderLength);
+        WorldBorderUtil.setBorder(world, spawnX, spawnZ, TagSettings.getBorderSize());
     
-        // TODO: save location and possibly inventory. maybe even potion effects if you want to be fancy.
         for (Player player : world.getPlayers()) {
             PlayerDataSaver.saveData(player);
             player.teleport(LocationUtil.getSpawnpoint(world, spawnX, spawnZ));
