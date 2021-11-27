@@ -80,7 +80,7 @@ public class Game {
         
         Bukkit.broadcast(Component.text(ChatColor.YELLOW + "" + ChatColor.BOLD + tagged.getName() + ChatColor.RESET + "" + ChatColor.GREEN + " is now it!"));
         setItPlayer(tagged);
-        TagInfoDisplay.setItPlayerNametag();
+        TagInfoDisplay.setPlayerTeams(tagged, attacker);
     }
     
     public static void giveItPlayerHelmet(Player player) {

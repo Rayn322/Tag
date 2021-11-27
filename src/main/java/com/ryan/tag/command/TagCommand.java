@@ -39,7 +39,16 @@ public class TagCommand implements TabExecutor {
         }
         
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.RED + "Console cannot do this!");
+            if (args[0].equalsIgnoreCase("stop")) {
+                if (Game.isPlaying) {
+                    Bukkit.broadcast(Component.text(ChatColor.RED + "The game has been stopped by console."));
+                    Game.stop();
+                } else {
+                    sender.sendMessage(ChatColor.RED + "No game is being played!");
+                }
+            } else {
+                sender.sendMessage(ChatColor.RED + "Console cannot do this!");
+            }
             return true;
         }
         

@@ -9,6 +9,8 @@ import com.ryan.tag.util.WorldBorderUtil;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.Random;
 
@@ -38,11 +40,12 @@ public class PreGame {
             player.setGameMode(GameMode.SURVIVAL);
             player.setHealth(20);
             player.setFoodLevel(20);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, Integer.MAX_VALUE, 0, true, false));
         }
         
         Game.giveItPlayerHelmet(Game.getItPlayer());
         TagInfoDisplay.sendItPlayerTitle();
-        TagInfoDisplay.setItPlayerNametag();
+        TagInfoDisplay.setPlayerTeams(Game.getItPlayer(), null);
         Timer.startTimer(world);
     }
 }

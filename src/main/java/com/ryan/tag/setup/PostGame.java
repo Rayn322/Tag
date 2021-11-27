@@ -15,7 +15,7 @@ public class PostGame {
         Game.isPlaying = false;
         WorldBorderUtil.resetBorder(world);
         world.sendActionBar(Component.empty());
-        TagInfoDisplay.clearTeam();
+        TagInfoDisplay.clearTeams();
         
         for (Player player : world.getPlayers()) {
             player.getInventory().clear();

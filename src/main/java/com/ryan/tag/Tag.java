@@ -27,12 +27,12 @@ public final class Tag extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveConfig();
         TagSettings.readFromConfig();
-        TagInfoDisplay.createTeam();
+        TagInfoDisplay.createTeams();
     }
     
     @Override
     public void onDisable() {
-        TagInfoDisplay.deleteTeam();
+        TagInfoDisplay.deleteTeams();
         TagSettings.writeToConfig();
         saveConfig();
     }
