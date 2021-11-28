@@ -7,6 +7,7 @@ public class TagSettings {
     private static double timerLength = 1;
     private static int borderSize = 50;
     private static int spawnX = 0;
+    private static int spawnY = -1;
     private static int spawnZ = 0;
     private static boolean randomizeLocation = false;
     private static boolean infiniteGame = false;
@@ -16,6 +17,7 @@ public class TagSettings {
         timerLength = plugin.getConfig().getDouble("timerLength");
         borderSize = plugin.getConfig().getInt("borderSize");
         spawnX = plugin.getConfig().getInt("spawnX");
+        spawnY = plugin.getConfig().getInt("spawnY");
         spawnZ = plugin.getConfig().getInt("spawnZ");
         randomizeLocation = plugin.getConfig().getBoolean("randomizeLocation");
         infiniteGame = plugin.getConfig().getBoolean("infiniteGame");
@@ -26,6 +28,7 @@ public class TagSettings {
         plugin.getConfig().set("timerLength", timerLength);
         plugin.getConfig().set("borderSize", borderSize);
         plugin.getConfig().set("spawnX", spawnX);
+        plugin.getConfig().set("spawnY", spawnY);
         plugin.getConfig().set("spawnZ", spawnZ);
         plugin.getConfig().set("randomizeLocation", randomizeLocation);
         plugin.getConfig().set("infiniteGame", infiniteGame);
@@ -62,6 +65,15 @@ public class TagSettings {
     
     public static void setSpawnX(int spawnX) {
         TagSettings.spawnX = spawnX;
+        writeToConfig();
+    }
+    
+    public static int getSpawnY() {
+        return spawnY;
+    }
+    
+    public static void setSpawnY(int spawnY) {
+        TagSettings.spawnY = spawnY;
         writeToConfig();
     }
     

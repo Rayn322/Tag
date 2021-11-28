@@ -20,15 +20,20 @@ public class TagInfoDisplay {
         float percentage = 1 - getElapsedTimePercentage(System.currentTimeMillis(), Timer.startTime, minutesToMilliseconds((float) TagSettings.getTimerLength()));
         if (percentage > 0 && percentage < 1) {
             for (Player player : Game.getWorld().getPlayers()) {
-                player.setLevel(0);
-                // switch the percentage so the xp bar counts down
                 player.setExp(percentage);
+//                player.setLevel(millisecondsToSeconds(minutesToMilliseconds(TagSettings.getTimerLength()) - (System.currentTimeMillis() - Timer.startTime)));
             }
         }
     }
     
+    public static void updateXPLevel(int level) {
+        for (Player player : Game.getWorld().getPlayers()) {
+            player.setLevel(level);
+        }
+    }
+    
     public static void sendItPlayerTitle() {
-        Bukkit.getScheduler().runTaskTimer(Tag.getPlugin(), () -> Game.getWorld().sendActionBar(Component.text(ChatColor.DARK_RED + "" + ChatColor.BOLD + Game.getItPlayer().getName() + " is it")), 0, 10);
+        Bukkit.getScheduler().runTaskTimer(Tag.getPlugin(), () -> Game.getWorld().sendActionBar(Component.text(ChatColor.DARK_RED + "" + ChatColor.BOLD + Game.getItPlayer().getName() + " is it")), 0, 5);
     }
     
     public static void setPlayerTeams(Player tagged, @Nullable Player attacker) {
@@ -68,7 +73,7 @@ public class TagInfoDisplay {
         if (notItTeam == null) {
             notItTeam = scoreboard.registerNewTeam("notIt");
         }
-        notItTeam.color(NamedTextColor.DARK_GREEN);
+        notItTeam.color(NamedTextColor.DARK_BLUE);
     }
     
     public static void deleteTeams() {
@@ -81,7 +86,7 @@ public class TagInfoDisplay {
         return elapsedTime / endTime;
     }
     
-    private static float minutesToMilliseconds(float minutes) {
-        return minutes * 60000;
+    private static long minutesToMilliseconds(double minutes) {
+        return (long) (minutes * 60000);
     }
 }

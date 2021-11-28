@@ -17,6 +17,7 @@ public class Timer {
     
     private static final ArrayList<Integer> tasks = new ArrayList<>();
     public static long startTime;
+    public static int timeLeft;
     
     public static void startTimer(World world) {
         // countdown
@@ -30,6 +31,7 @@ public class Timer {
                 // convert minutes to ticks
                 int length = (int) (TagSettings.getTimerLength() * 1200);
                 startTime = System.currentTimeMillis();
+                timeLeft = (int) (TagSettings.getTimerLength() * 60);
                 scheduleGameEnd(length);
             }
         }, 100L);
@@ -52,7 +54,11 @@ public class Timer {
         scheduleCountdownMessage(1);
         
         Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), Game::stop, length);
-        Bukkit.getScheduler().runTaskTimer(Tag.getPlugin(), TagInfoDisplay::updateXPTimer, 0, 20);
+        Bukkit.getScheduler().runTaskTimer(Tag.getPlugin(), TagInfoDisplay::updateXPTimer, 0, 10);
+        Bukkit.getScheduler().runTaskTimer(Tag.getPlugin(), () -> {
+            TagInfoDisplay.updateXPLevel(timeLeft);
+            timeLeft--;
+        }, 0, 20);
     }
     
     private static void sendCountdown(World world, String message, float pitch) {

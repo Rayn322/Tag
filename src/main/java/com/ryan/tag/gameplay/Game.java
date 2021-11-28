@@ -4,10 +4,11 @@ import com.ryan.tag.config.TagSettings;
 import com.ryan.tag.setup.PostGame;
 import com.ryan.tag.setup.PreGame;
 import net.kyori.adventure.text.Component;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.UUID;
 
@@ -84,11 +85,11 @@ public class Game {
     }
     
     public static void giveItPlayerHelmet(Player player) {
-        ItemStack itHelmet = new ItemStack(Material.LEATHER_HELMET);
-        LeatherArmorMeta meta = (LeatherArmorMeta) itHelmet.getItemMeta();
-        meta.setColor(Color.RED);
-        itHelmet.setItemMeta(meta);
-    
-        player.getInventory().setHelmet(itHelmet);
+//        ItemStack itHelmet = new ItemStack(Material.LEATHER_HELMET);
+//        LeatherArmorMeta meta = (LeatherArmorMeta) itHelmet.getItemMeta();
+//        meta.setColor(Color.RED);
+//        itHelmet.setItemMeta(meta);
+//
+//        player.getInventory().setHelmet(itHelmet);
     }
 }

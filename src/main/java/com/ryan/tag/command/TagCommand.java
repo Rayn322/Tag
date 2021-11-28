@@ -24,7 +24,8 @@ public class TagCommand implements TabExecutor {
             ChatColor.YELLOW + "/tag help" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Prints this message.",
             ChatColor.YELLOW + "/tag <start/stop>" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Starts or stops the game.",
             ChatColor.YELLOW + "/tag length <minutes>" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Sets the length of the game in minutes. Set the length to 0 for an infinite game.",
-            ChatColor.YELLOW + "/tag location <x> <z>" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Sets the location of the game.",
+            ChatColor.YELLOW + "/tag location <x> <z>" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Sets the x and z coordinates of the game.",
+            ChatColor.YELLOW + "/tag location <x> <y> <z>" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Sets the x, y, and z coordinates of the game.",
             ChatColor.YELLOW + "/tag location random" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Makes the location of the game random.",
             ChatColor.YELLOW + "/tag border <size>" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Sets the side length of the border in blocks.",
             ChatColor.YELLOW + "/tag settings" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Views the current settings.",
@@ -89,6 +90,7 @@ public class TagCommand implements TabExecutor {
         } else if (args[0].equalsIgnoreCase("location")) {
             try {
                 int x;
+                int y;
                 int z;
                 
                 if (args[1].equalsIgnoreCase("~")) {
@@ -100,20 +102,45 @@ public class TagCommand implements TabExecutor {
                 } else {
                     x = Integer.parseInt(args[1]);
                 }
-                if (args[2].equalsIgnoreCase("~")) {
-                    z = ((Player) sender).getLocation().getBlockZ();
+                
+                if (args.length > 3) {
+                    if (args[2].equalsIgnoreCase("~")) {
+                        y = ((Player) sender).getLocation().getBlockY();
+                    } else {
+                        y = Integer.parseInt(args[2]);
+                    }
+                    if (args[3].equalsIgnoreCase("~")) {
+                        z = ((Player) sender).getLocation().getBlockZ();
+                    } else {
+                        z = Integer.parseInt(args[3]);
+                    }
                 } else {
-                    z = Integer.parseInt(args[2]);
+                    if (args[2].equalsIgnoreCase("~")) {
+                        z = ((Player) sender).getLocation().getBlockZ();
+                    } else {
+                        z = Integer.parseInt(args[2]);
+                    }
+                    y = -1;
                 }
                 
                 TagSettings.setSpawnX(x);
+                TagSettings.setSpawnY(y);
                 TagSettings.setSpawnZ(z);
                 TagSettings.setRandomizeLocation(false);
-                sender.sendMessage(ChatColor.DARK_GREEN + "Location set to " + ChatColor.YELLOW + "x = " + TagSettings.getSpawnX() + ChatColor.DARK_GREEN + " and " + ChatColor.YELLOW + "z = " + TagSettings.getSpawnZ() + ChatColor.DARK_GREEN + ".");
+                
+                if (TagSettings.getSpawnY() == -1) {
+                    sender.sendMessage(ChatColor.DARK_GREEN + "Location set to " + ChatColor.YELLOW + "x = " + TagSettings.getSpawnX() + ChatColor.DARK_GREEN + " and " + ChatColor.YELLOW + "z = " + TagSettings.getSpawnZ() + ChatColor.DARK_GREEN + ".");
+                } else {
+                    sender.sendMessage(ChatColor.DARK_GREEN + "Location set to " + ChatColor.YELLOW + "x = " + TagSettings.getSpawnX() + ", y = " + TagSettings.getSpawnY() + ChatColor.DARK_GREEN + " and " + ChatColor.YELLOW + "z = " + TagSettings.getSpawnZ() + ChatColor.DARK_GREEN + ".");
+                }
             } catch (ArrayIndexOutOfBoundsException e) {
                 sender.sendMessage(ChatColor.RED + "No coordinates provided!");
             } catch (NumberFormatException e) {
-                sender.sendMessage(ChatColor.RED + "Could not set the location to " + ChatColor.YELLOW + "x = " + args[1] + ChatColor.RED + " and " + ChatColor.YELLOW + "z = " + args[2] + ChatColor.RED + ".");
+                if (args.length > 3) {
+                    sender.sendMessage(ChatColor.RED + "Could not set the location to " + ChatColor.YELLOW + "x = " + args[1] + ", y = " + args[2] + ChatColor.RED + " and " + ChatColor.YELLOW + "z = " + args[3] + ChatColor.RED + ".");
+                } else {
+                    sender.sendMessage(ChatColor.RED + "Could not set the location to " + ChatColor.YELLOW + "x = " + args[1] + ChatColor.RED + " and " + ChatColor.YELLOW + "z = " + args[2] + ChatColor.RED + ".");
+                }
             }
             
         } else if (args[0].equalsIgnoreCase("border")) {
@@ -169,7 +196,7 @@ public class TagCommand implements TabExecutor {
         if (args[0].equalsIgnoreCase("randomlocation") && args.length == 2) return List.of("true", "false");
         if (args[0].equalsIgnoreCase("location")) {
             if (args.length == 2) return List.of("~", "random");
-            if (args.length == 3) return List.of("~");
+            if (args.length == 3 || args.length == 4) return List.of("~");
         }
         
         return null;

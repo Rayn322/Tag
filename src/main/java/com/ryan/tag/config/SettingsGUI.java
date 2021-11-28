@@ -86,7 +86,11 @@ public class SettingsGUI implements Listener {
     private static void createLocationButton(Inventory inventory) {
         ItemStack itemStack = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.displayName(Component.text(ChatColor.YELLOW + "x = " + TagSettings.getSpawnX() + ", z = " + TagSettings.getSpawnZ()));
+        if (TagSettings.getSpawnY() == -1) {
+            itemMeta.displayName(Component.text(ChatColor.YELLOW + "x = " + TagSettings.getSpawnX() + ", z = " + TagSettings.getSpawnZ()));
+        } else {
+            itemMeta.displayName(Component.text(ChatColor.YELLOW + "x = " + TagSettings.getSpawnX() + ", y = " + TagSettings.getSpawnY() + ", z = " + TagSettings.getSpawnZ()));
+        }
         itemStack.setItemMeta(itemMeta);
         inventory.setItem(20, itemStack);
     }
@@ -100,7 +104,7 @@ public class SettingsGUI implements Listener {
     }
     
     private static void updateGUI() {
-        // TODO: account for random location and infinite timer
+        // TODO: account for random location and infinite timer, also fix grammar for when length is 1 minute
         createLengthButton(settingsGUI);
         createLocationButton(settingsGUI);
         createBorderButton(settingsGUI);

@@ -20,6 +20,7 @@ public class PreGame {
         Game.isPlaying = true;
         Game.isSpawnProtected = true;
         int spawnX;
+        int spawnY;
         int spawnZ;
         
         if (TagSettings.doesRandomizeLocation()) {
@@ -28,19 +29,22 @@ public class PreGame {
             spawnZ = random.nextInt(10000) - 5000;
         } else {
             spawnX = TagSettings.getSpawnX();
+            spawnY = TagSettings.getSpawnY();
             spawnZ = TagSettings.getSpawnZ();
         }
-    
+        
         WorldBorderUtil.setBorder(world, spawnX, spawnZ, TagSettings.getBorderSize());
-    
+        
         for (Player player : world.getPlayers()) {
             PlayerDataSaver.saveData(player);
-            player.teleport(LocationUtil.getSpawnpoint(world, spawnX, spawnZ));
+            player.teleport(LocationUtil.getSpawnpoint());
             player.getInventory().clear();
-            player.setGameMode(GameMode.SURVIVAL);
+            player.setGameMode(GameMode.ADVENTURE);
             player.setHealth(20);
             player.setFoodLevel(20);
             player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, Integer.MAX_VALUE, 0, true, false));
+            player.setLevel((int) (TagSettings.getTimerLength() * 60));
+            player.setExp(1);
         }
         
         Game.giveItPlayerHelmet(Game.getItPlayer());

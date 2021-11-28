@@ -4,9 +4,11 @@ import com.ryan.tag.bstats.Metrics;
 import com.ryan.tag.command.TagCommand;
 import com.ryan.tag.config.SettingsGUI;
 import com.ryan.tag.config.TagSettings;
+import com.ryan.tag.gameplay.Game;
 import com.ryan.tag.gameplay.TagInfoDisplay;
 import com.ryan.tag.listener.PreventDamage;
 import com.ryan.tag.listener.TagPlayer;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -33,6 +35,10 @@ public final class Tag extends JavaPlugin {
     
     @Override
     public void onDisable() {
+        if (Game.isPlaying) {
+            Game.stop();
+            getLogger().info(ChatColor.RED + "Stopping game because the server has stopped.");
+        }
         TagInfoDisplay.deleteTeams();
         TagSettings.writeToConfig();
         saveConfig();
