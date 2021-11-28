@@ -73,7 +73,7 @@ public class TagCommand implements TabExecutor {
                 double length = Double.parseDouble(args[1]);
                 if (length > 0) {
                     TagSettings.setTimerLength(length);
-                    sender.sendMessage(ChatColor.DARK_GREEN + "Game length set to " + ChatColor.YELLOW + TagSettings.getTimerLength() + " minutes" + ChatColor.DARK_GREEN + ".");
+                    sender.sendMessage(ChatColor.DARK_GREEN + "Game length set to " + ChatColor.YELLOW + TagSettings.getTimerLengthAsString() + " minutes" + ChatColor.DARK_GREEN + ".");
                 } else if (length == 0) {
                     sender.sendMessage(ChatColor.DARK_GREEN + "The game will now be infinite.");
                     TagSettings.setInfiniteGame(true);

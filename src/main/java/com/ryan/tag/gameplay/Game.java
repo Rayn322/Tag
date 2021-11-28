@@ -48,7 +48,7 @@ public class Game {
         if (TagSettings.isInfiniteGame()) {
             Bukkit.broadcast(Component.text(ChatColor.GREEN + "Starting an infinite game of tag!"));
         } else {
-            Bukkit.broadcast(Component.text(ChatColor.GREEN + "Starting a " + ChatColor.YELLOW + TagSettings.getTimerLength() + ChatColor.GREEN + " minute game of tag!"));
+            Bukkit.broadcast(Component.text(ChatColor.GREEN + "Starting a " + ChatColor.YELLOW + TagSettings.getTimerLengthAsString() + ChatColor.GREEN + " minute game of tag!"));
         }
         Bukkit.broadcast(Component.text(ChatColor.YELLOW + "" + ChatColor.BOLD + itPlayer.getName() + ChatColor.RESET + "" + ChatColor.GREEN + " will start as it!"));
         setItPlayer(itPlayer.getUniqueId());

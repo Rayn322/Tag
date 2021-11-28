@@ -78,7 +78,7 @@ public class SettingsGUI implements Listener {
     private static void createLengthButton(Inventory inventory) {
         ItemStack itemStack = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.displayName(Component.text(ChatColor.YELLOW + Double.toString(TagSettings.getTimerLength()) + " Minutes"));
+        itemMeta.displayName(Component.text(ChatColor.YELLOW + TagSettings.getTimerLengthAsString() + " Minutes"));
         itemStack.setItemMeta(itemMeta);
         inventory.setItem(11, itemStack);
     }

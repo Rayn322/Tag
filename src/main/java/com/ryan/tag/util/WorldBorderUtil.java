@@ -29,7 +29,7 @@ public class WorldBorderUtil {
      */
     public static void setBorder(World world, int centerX, int centerZ, double size) {
         WorldBorder worldBorder = world.getWorldBorder();
-        worldBorder.setCenter(centerX, centerZ);
+        worldBorder.setCenter(centerX + 0.5, centerZ + 0.5);
         worldBorder.setSize(size);
     }
     
