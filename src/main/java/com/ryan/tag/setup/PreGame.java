@@ -48,6 +48,7 @@ public class PreGame {
         }
         
         Game.giveItPlayerHelmet(Game.getItPlayer());
+        Game.getItPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, true, false));
         TagInfoDisplay.sendItPlayerTitle();
         TagInfoDisplay.setPlayerTeams(Game.getItPlayer(), null);
         Timer.startTimer(world);

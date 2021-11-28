@@ -9,6 +9,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.UUID;
 
@@ -71,8 +73,9 @@ public class Game {
     
     // TODO: change boss bar
     public static void handlePlayerTag(Player tagged, Player attacker) {
+        setItPlayer(tagged);
         giveItPlayerHelmet(tagged);
-        attacker.getInventory().setHelmet(null);
+//        attacker.getInventory().setHelmet(null);
         
         // TODO: experiment with new sounds; different sounds for different players
         for (Player player : world.getPlayers()) {
@@ -80,8 +83,9 @@ public class Game {
         }
         
         Bukkit.broadcast(Component.text(ChatColor.YELLOW + "" + ChatColor.BOLD + tagged.getName() + ChatColor.RESET + "" + ChatColor.GREEN + " is now it!"));
-        setItPlayer(tagged);
         TagInfoDisplay.setPlayerTeams(tagged, attacker);
+        attacker.removePotionEffect(PotionEffectType.SPEED);
+        tagged.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, true, false));
     }
     
     public static void giveItPlayerHelmet(Player player) {
