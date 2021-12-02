@@ -7,11 +7,12 @@ plugins {
 group = 'com.ryan'
 version = '1.0'
 
-sourceCompatibility = '1.16'
-targetCompatibility = '1.16'
+sourceCompatibility = '1.17'
+targetCompatibility = '1.17'
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven {
         url = 'https://papermc.io/repo/repository/maven-public/'
     }
@@ -22,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT'
+    compileOnly 'io.papermc.paper:paper-api:1.18-R0.1-SNAPSHOT'
 }
 
 processResources {
