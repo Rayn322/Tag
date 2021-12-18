@@ -1,10 +1,10 @@
 package com.ryan.tag.config;
 
-import com.ryan.tag.Tag;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -48,17 +48,17 @@ public class SettingsGUI implements Listener {
         barrier.setItemMeta(barrierMeta);
         inventory.setItem(28, barrier);
         
-        createButton(inventory, 13, Material.LIME_STAINED_GLASS_PANE, "Enter value", ChatColor.YELLOW);
-        createButton(inventory, 14, Material.ORANGE_STAINED_GLASS_PANE, "5 Minutes", ChatColor.YELLOW);
-        createButton(inventory, 15, Material.RED_STAINED_GLASS_PANE, "Infinite", ChatColor.YELLOW);
+        createButton(inventory, 13, Material.LIME_STAINED_GLASS_PANE, "Enter value");
+        createButton(inventory, 14, Material.ORANGE_STAINED_GLASS_PANE, "5 Minutes");
+        createButton(inventory, 15, Material.RED_STAINED_GLASS_PANE, "Infinite");
         
-        createButton(inventory, 22, Material.LIME_STAINED_GLASS_PANE, "Enter value", ChatColor.YELLOW);
-        createButton(inventory, 23, Material.ORANGE_STAINED_GLASS_PANE, "Current Location", ChatColor.YELLOW);
-        createButton(inventory, 24, Material.RED_STAINED_GLASS_PANE, "Random", ChatColor.YELLOW);
+        createButton(inventory, 22, Material.LIME_STAINED_GLASS_PANE, "Enter value");
+        createButton(inventory, 23, Material.ORANGE_STAINED_GLASS_PANE, "Current Location");
+        createButton(inventory, 24, Material.RED_STAINED_GLASS_PANE, "Random");
         
-        createButton(inventory, 31, Material.LIME_STAINED_GLASS_PANE, "Enter value", ChatColor.YELLOW);
-        createButton(inventory, 32, Material.ORANGE_STAINED_GLASS_PANE, "50 Blocks", ChatColor.YELLOW);
-        createButton(inventory, 33, Material.RED_STAINED_GLASS_PANE, "None", ChatColor.YELLOW);
+        createButton(inventory, 31, Material.LIME_STAINED_GLASS_PANE, "Enter value");
+        createButton(inventory, 32, Material.ORANGE_STAINED_GLASS_PANE, "50 Blocks");
+        createButton(inventory, 33, Material.RED_STAINED_GLASS_PANE, "None");
         
         createLengthButton(inventory);
         createLocationButton(inventory);
@@ -67,10 +67,10 @@ public class SettingsGUI implements Listener {
         settingsGUI = inventory;
     }
     
-    private static void createButton(Inventory inventory, int slot, Material item, String text, ChatColor chatColor) {
+    private static void createButton(Inventory inventory, int slot, Material item, String text) {
         ItemStack itemStack = new ItemStack(item);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.displayName(Component.text(chatColor + text));
+        itemMeta.displayName(Component.text(ChatColor.YELLOW + text));
         itemStack.setItemMeta(itemMeta);
         inventory.setItem(slot, itemStack);
     }
@@ -78,7 +78,13 @@ public class SettingsGUI implements Listener {
     private static void createLengthButton(Inventory inventory) {
         ItemStack itemStack = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.displayName(Component.text(ChatColor.YELLOW + TagSettings.getTimerLengthAsString() + " Minutes"));
+        if (TagSettings.isInfiniteGame()) {
+            itemMeta.displayName(Component.text(ChatColor.YELLOW + "Infinite"));
+        } else if (TagSettings.getTimerLength() == 1) {
+            itemMeta.displayName(Component.text(ChatColor.YELLOW + TagSettings.getTimerLengthAsString() + " Minute"));
+        } else {
+            itemMeta.displayName(Component.text(ChatColor.YELLOW + TagSettings.getTimerLengthAsString() + " Minutes"));
+        }
         itemStack.setItemMeta(itemMeta);
         inventory.setItem(11, itemStack);
     }
@@ -86,7 +92,9 @@ public class SettingsGUI implements Listener {
     private static void createLocationButton(Inventory inventory) {
         ItemStack itemStack = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        if (TagSettings.getSpawnY() == -1) {
+        if (TagSettings.doesRandomizeLocation()) {
+            itemMeta.displayName(Component.text(ChatColor.YELLOW + "Random"));
+        } else if (TagSettings.getSpawnY() == -1) {
             itemMeta.displayName(Component.text(ChatColor.YELLOW + "x = " + TagSettings.getSpawnX() + ", z = " + TagSettings.getSpawnZ()));
         } else {
             itemMeta.displayName(Component.text(ChatColor.YELLOW + "x = " + TagSettings.getSpawnX() + ", y = " + TagSettings.getSpawnY() + ", z = " + TagSettings.getSpawnZ()));
@@ -98,13 +106,18 @@ public class SettingsGUI implements Listener {
     private static void createBorderButton(Inventory inventory) {
         ItemStack itemStack = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.displayName(Component.text(ChatColor.YELLOW + Integer.toString(TagSettings.getBorderSize()) + " Blocks"));
+        if (TagSettings.getBorderSize() == -1) {
+            itemMeta.displayName(Component.text(ChatColor.YELLOW + "None"));
+        } else if (TagSettings.getBorderSize() == 1) {
+            itemMeta.displayName(Component.text(ChatColor.YELLOW + Integer.toString(TagSettings.getBorderSize()) + " Block"));
+        } else {
+            itemMeta.displayName(Component.text(ChatColor.YELLOW + Integer.toString(TagSettings.getBorderSize()) + " Blocks"));
+        }
         itemStack.setItemMeta(itemMeta);
         inventory.setItem(29, itemStack);
     }
     
     private static void updateGUI() {
-        // TODO: account for random location and infinite timer, also fix grammar for when length is 1 minute
         createLengthButton(settingsGUI);
         createLocationButton(settingsGUI);
         createBorderButton(settingsGUI);
@@ -116,10 +129,64 @@ public class SettingsGUI implements Listener {
             event.setCancelled(true);
             ((Player) event.getWhoClicked()).updateInventory();
             
-            if (event.getCurrentItem() == null) {
-                Tag.getPlugin().getLogger().info("Clicked on empty slot");
-            } else {
-                Tag.getPlugin().getLogger().info("Clicked on " + event.getCurrentItem().getItemMeta().displayName());
+            if (event.getCurrentItem() != null) {
+                Player player = (Player) event.getWhoClicked();
+                switch (event.getSlot()) {
+                    case 13 -> {
+                        // custom length
+                        PlayerInput.askForLength(player);
+                        player.closeInventory();
+                    }
+                    case 14 -> {
+                        // 5 minutes
+                        TagSettings.setTimerLength(5);
+                        TagSettings.setInfiniteGame(false);
+                        updateGUI();
+                    }
+                    case 15 -> {
+                        // infinite
+                        TagSettings.setInfiniteGame(true);
+                        updateGUI();
+                    }
+                    case 22 -> {
+                        // custom location
+                        PlayerInput.askForLocation(player);
+                        player.closeInventory();
+                    }
+                    case 23 -> {
+                        // current location
+                        TagSettings.setSpawnX(player.getLocation().getBlockX());
+                        TagSettings.setSpawnY(player.getLocation().getBlockY());
+                        TagSettings.setSpawnZ(player.getLocation().getBlockZ());
+                        TagSettings.setRandomizeLocation(false);
+                        updateGUI();
+                    }
+                    case 24 -> {
+                        // random location
+                        TagSettings.setRandomizeLocation(true);
+                        updateGUI();
+                    }
+                    case 31 -> {
+                        // custom border
+                        PlayerInput.askForBorderSize(player);
+                        player.closeInventory();
+                    }
+                    case 32 -> {
+                        // 50 blocks
+                        TagSettings.setBorderSize(50);
+                        updateGUI();
+                    }
+                    case 33 -> {
+                        // no border
+                        TagSettings.setBorderSize(-1);
+                        updateGUI();
+                    }
+                }
+                
+                // pain
+                if (event.getSlot() == 13 || event.getSlot() == 14 || event.getSlot() == 15 || event.getSlot() == 22 || event.getSlot() == 23 || event.getSlot() == 24 || event.getSlot() == 31 || event.getSlot() == 32 || event.getSlot() == 33) {
+                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1, 2);
+                }
             }
         }
     }

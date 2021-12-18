@@ -38,16 +38,16 @@ public class TagSettings {
         return timerLength;
     }
     
+    public static void setTimerLength(double timerLength) {
+        TagSettings.timerLength = timerLength;
+        writeToConfig();
+    }
+    
     public static String getTimerLengthAsString() {
         if (getTimerLength() % 1 == 0) {
             return String.valueOf((int) getTimerLength());
         }
         return String.valueOf(getTimerLength());
-    }
-    
-    public static void setTimerLength(double timerLength) {
-        TagSettings.timerLength = timerLength;
-        writeToConfig();
     }
     
     public static int getBorderSize() {

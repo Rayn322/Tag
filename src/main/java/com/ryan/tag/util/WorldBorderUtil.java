@@ -1,23 +1,9 @@
 package com.ryan.tag.util;
 
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
 
 public class WorldBorderUtil {
-    
-    /**
-     * Sets the center and size of the WorldBorder
-     *
-     * @param world  The world in question
-     * @param center Location of the new center
-     * @param size   The new side length
-     */
-    public static void setBorder(World world, Location center, double size) {
-        WorldBorder worldBorder = world.getWorldBorder();
-        worldBorder.setCenter(center);
-        worldBorder.setSize(size);
-    }
     
     /**
      * Sets the center and size of the WorldBorder

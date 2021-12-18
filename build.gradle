@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'com.ryan'
-version = '1.0'
+version = '1.0.0'
 
 repositories {
     mavenCentral()
@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
     compileOnly 'io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT'
+    
 }
 
 def targetJavaVersion = 17
@@ -49,6 +50,6 @@ processResources {
 
 task copyJar(type: Copy) {
     dependsOn(build)
-    from file("${buildDir}/libs/Tag-1.0.jar")
-    into file("C:/Users/Ryan/Documents/MinecraftServers/Paper-1.17.1/plugins")
+    from file("${buildDir}/libs/Tag-${version}.jar")
+    into file("C:/Users/Ryan/Documents/MinecraftServers/Paper-1.18.1/plugins")
 }

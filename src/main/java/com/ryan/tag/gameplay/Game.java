@@ -71,7 +71,6 @@ public class Game {
         PostGame.cleanup(world);
     }
     
-    // TODO: change boss bar
     public static void handlePlayerTag(Player tagged, Player attacker) {
         setItPlayer(tagged);
         giveItPlayerHelmet(tagged);
