@@ -11,7 +11,7 @@ public class PlayerDataSaver {
     private static final HashMap<UUID, PlayerData> playerDataMap = new HashMap<>();
     
     public static void saveData(Player player) {
-        PlayerData playerData = new PlayerData(player.getHealth(), player.getFoodLevel(), player.getLevel(), player.getExp(), player.getLocation(), player.getInventory().getContents(), player.getGameMode());
+        PlayerData playerData = new PlayerData(player.getHealth(), player.getFoodLevel(), player.getLevel(), player.getExp(), player.getLocation(), player.getInventory().getContents(), player.getGameMode(), player.getActivePotionEffects());
         playerDataMap.put(player.getUniqueId(), playerData);
     }
     
@@ -32,6 +32,7 @@ public class PlayerDataSaver {
             player.teleport(playerData.getLocation());
             player.getInventory().setContents(playerData.getInventory());
             player.setGameMode(playerData.getGameMode());
+            player.addPotionEffects(playerData.getPotionEffects());
         }
     }
     

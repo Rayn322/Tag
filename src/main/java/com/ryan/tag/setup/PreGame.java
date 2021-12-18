@@ -40,6 +40,7 @@ public class PreGame {
             PlayerDataSaver.saveData(player);
             player.teleport(getSpawnpoint(spawnX, spawnY, spawnZ));
             player.getInventory().clear();
+            player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
             player.setGameMode(GameMode.ADVENTURE);
             player.setHealth(20);
             player.setFoodLevel(20);

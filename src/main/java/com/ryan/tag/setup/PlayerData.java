@@ -3,6 +3,9 @@ package com.ryan.tag.setup;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+
+import java.util.Collection;
 
 public class PlayerData {
     
@@ -13,8 +16,9 @@ public class PlayerData {
     private final Location location;
     private final ItemStack[] inventory;
     private final GameMode gamemode;
+    private final Collection<PotionEffect> potionEffects;
     
-    public PlayerData(double health, int food, int level, float exp, Location location, ItemStack[] inventory, GameMode gamemode) {
+    public PlayerData(double health, int food, int level, float exp, Location location, ItemStack[] inventory, GameMode gamemode, Collection<PotionEffect> potionEffects) {
         this.health = health;
         this.food = food;
         this.level = level;
@@ -22,6 +26,7 @@ public class PlayerData {
         this.location = location;
         this.inventory = inventory;
         this.gamemode = gamemode;
+        this.potionEffects = potionEffects;
     }
     
     public double getHealth() {
@@ -50,5 +55,9 @@ public class PlayerData {
     
     public GameMode getGameMode() {
         return gamemode;
+    }
+    
+    public Collection<PotionEffect> getPotionEffects() {
+        return potionEffects;
     }
 }
