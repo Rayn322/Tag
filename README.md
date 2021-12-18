@@ -6,3 +6,7 @@ A Minecraft server plugin so you can play tag with your friends!
 -   /tag stop - Stops the game and returns you to your original position. This also restores your gamemode, health, food, etc.
 -   /tag settings - Displays a GUI where you can configure the settings.
 -   /tag help - Displays a help message with these commands
+
+## Requirements
+-   A Paper server running 1.18. Future versions of Paper may work.
+-   Friends!
