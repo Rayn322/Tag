@@ -2,10 +2,7 @@
 A Minecraft server plugin so you can play tag with your friends!
 
 ## Using the plugin
--   /tag start <length of game in minutes (optional)> - Starts the game of tag. This will warp everyone to a random spot in the world. Whoever ran the command will be it first and the game will start after 3 seconds. If no length is specified the game will be infinite. Currently, no decimals are allowed.
--   /tag stop - Stops the game and returns you to your original position.
--   /tag coordinates <x> <z> - Sets coordinates to use. Leave blank for random coordinates.
--   /tag reload - Reloads the config. It's recommended to change the config with commands rather than edit it manually.
-
-## Supported Versions
-Currently, the only supported versions are 1.17 to 1.13.
+-   /tag start - Starts the game of tag. Everyone will be warped to the chosen point and the game will begin after 5 seconds. The person who runs the command is it.
+-   /tag stop - Stops the game and returns you to your original position. This also restores your gamemode, health, food, etc.
+-   /tag settings - Displays a GUI where you can configure the settings.
+-   /tag help - Displays a help message with these commands
