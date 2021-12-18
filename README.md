@@ -1,5 +1,5 @@
 # Tag
-A Minecraft server plugin so you can play tag with your friends!
+A Minecraft server plugin that lets you play tag with your friends!
 
 ## Using the plugin
 -   /tag start - Starts the game of tag. Everyone will be warped to the chosen point and the game will begin after 5 seconds. The person who runs the command is it.
