@@ -1,6 +1,5 @@
 package com.ryan.tag.setup;
 
-import com.ryan.tag.Tag;
 import com.ryan.tag.config.TagSettings;
 import com.ryan.tag.gameplay.Game;
 import com.ryan.tag.gameplay.TagInfoDisplay;
@@ -58,8 +57,6 @@ public class PreGame {
     
     private static Location getSpawnpoint(int spawnX, int spawnY, int spawnZ) {
         World world = Game.getWorld();
-        Tag.getPlugin().getLogger().info("Spawnpoint: " + TagSettings.getSpawnX() + " " + TagSettings.getSpawnZ());
-        
         Location location;
         if (spawnY == -1) {
             location = world.getHighestBlockAt(spawnX, spawnZ).getLocation();
@@ -69,7 +66,6 @@ public class PreGame {
             location.add(0.5, 0, 0.5);
         }
         
-        Tag.getPlugin().getLogger().info("Teleporting to: " + location.getX() + " " + location.getY() + " " + location.getZ());
         return location;
     }
 }
