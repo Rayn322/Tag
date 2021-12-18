@@ -1,0 +1,10 @@
+name: Tag
+version: ${version}
+main: com.ryan.tag.Tag
+api-version: 1.18
+author: Ryan
+description: Play tag with your friends in Minecraft!
+
+commands:
+  tag:
+    description: Command for configuring tag.
