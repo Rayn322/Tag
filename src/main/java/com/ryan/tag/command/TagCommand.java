@@ -19,7 +19,7 @@ public class TagCommand implements TabExecutor {
     
     private final String[] helpMessage = {
             ChatColor.DARK_BLUE + "-----------------------------------------------------",
-            ChatColor.YELLOW + "" + ChatColor.BOLD + "Tag v1.0.0 by Ryan",
+            ChatColor.YELLOW + "" + ChatColor.BOLD + "Tag v1.0.1 by Ryan",
             ChatColor.YELLOW + "/tag <start/stop>" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Starts or stops the game.",
             ChatColor.YELLOW + "/tag settings" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "View and edit settings.",
             ChatColor.YELLOW + "/tag help" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Prints this message.",
