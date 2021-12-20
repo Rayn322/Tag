@@ -85,12 +85,7 @@ public class TagCommand implements TabExecutor {
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
-        if (args.length == 1) return List.of("start", "stop", "help", "length", "location", "border", "settings");
-        if (args[0].equalsIgnoreCase("randomlocation") && args.length == 2) return List.of("true", "false");
-        if (args[0].equalsIgnoreCase("location")) {
-            if (args.length == 2) return List.of("~", "random");
-            if (args.length == 3 || args.length == 4) return List.of("~");
-        }
+        if (args.length == 1) return List.of("start", "stop", "settings", "help");
         
         return null;
     }
