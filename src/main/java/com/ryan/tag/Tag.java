@@ -31,7 +31,7 @@ public final class Tag extends JavaPlugin {
             Class.forName("io.papermc.paper.event.player.AsyncChatEvent");
         } catch (ClassNotFoundException e) {
             getLogger().severe("Paper is not installed! Disabling plugin.");
-            getLogger().severe("Please download paper at https://papermc.io/downloads");
+            getLogger().severe("Please download Paper at https://papermc.io/downloads");
             isPaper = false;
             return;
         }
