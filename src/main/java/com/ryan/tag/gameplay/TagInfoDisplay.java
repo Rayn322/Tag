@@ -17,11 +17,10 @@ public class TagInfoDisplay {
     public static Team notItTeam;
     
     public static void updateXPTimer() {
-        float percentage = 1 - getElapsedTimePercentage(System.currentTimeMillis(), Timer.startTime, minutesToMilliseconds((float) TagSettings.getTimerLength()));
+        float percentage = 1 - getElapsedTimePercentage(System.currentTimeMillis(), Timer.startTime, minutesToMilliseconds(TagSettings.getTimerLength()));
         if (percentage > 0 && percentage < 1) {
             for (Player player : Game.getWorld().getPlayers()) {
                 player.setExp(percentage);
-//                player.setLevel(millisecondsToSeconds(minutesToMilliseconds(TagSettings.getTimerLength()) - (System.currentTimeMillis() - Timer.startTime)));
             }
         }
     }
