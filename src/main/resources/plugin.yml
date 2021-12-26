@@ -6,5 +6,5 @@ author: Ryan
 description: Play tag with your friends in Minecraft!
 
 commands:
-  tag:
+  tag-game:
     description: Command for configuring tag.

@@ -78,6 +78,6 @@ public final class Tag extends JavaPlugin {
     @SuppressWarnings("ConstantConditions")
     private void registerCommands() {
         TagCommand tagCommand = new TagCommand();
-        getCommand("tag").setExecutor(tagCommand);
+        getCommand("tag-game").setExecutor(tagCommand);
     }
 }

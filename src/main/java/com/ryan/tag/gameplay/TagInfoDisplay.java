@@ -62,15 +62,15 @@ public class TagInfoDisplay {
     
     public static void createTeams() {
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
-        itTeam = scoreboard.getTeam("it");
+        itTeam = scoreboard.getTeam("tag-it");
         if (itTeam == null) {
-            itTeam = scoreboard.registerNewTeam("it");
+            itTeam = scoreboard.registerNewTeam("tag-it");
         }
         itTeam.color(NamedTextColor.DARK_RED);
         
-        notItTeam = scoreboard.getTeam("notIt");
+        notItTeam = scoreboard.getTeam("tag-notIt");
         if (notItTeam == null) {
-            notItTeam = scoreboard.registerNewTeam("notIt");
+            notItTeam = scoreboard.registerNewTeam("tag-notIt");
         }
         notItTeam.color(NamedTextColor.DARK_BLUE);
     }
