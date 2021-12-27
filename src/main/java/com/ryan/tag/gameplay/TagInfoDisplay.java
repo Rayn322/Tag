@@ -32,7 +32,11 @@ public class TagInfoDisplay {
     }
     
     public static void sendItPlayerTitle() {
-        Bukkit.getScheduler().runTaskTimer(Tag.getPlugin(), () -> Game.getWorld().sendActionBar(Component.text(ChatColor.DARK_RED + "" + ChatColor.BOLD + Game.getItPlayer().getName() + " is it")), 0, 5);
+        Bukkit.getScheduler().runTaskTimer(Tag.getPlugin(), () -> {
+            if (Game.getItPlayer() != null) {
+                Game.getWorld().sendActionBar(Component.text(ChatColor.DARK_RED + "" + ChatColor.BOLD + Game.getItPlayer().getName() + " is it"));
+            }
+        }, 0, 5);
     }
     
     public static void setPlayerTeams(Player tagged, @Nullable Player attacker) {
@@ -43,6 +47,7 @@ public class TagInfoDisplay {
             itTeam.removeEntry(attacker.getName());
             notItTeam.addEntry(attacker.getName());
         } else {
+            // add all players to notItTeam except for the tagged player
             for (Player player : Game.getWorld().getPlayers()) {
                 if (!player.getName().equals(tagged.getName())) {
                     notItTeam.addEntry(player.getName());
@@ -63,21 +68,38 @@ public class TagInfoDisplay {
     public static void createTeams() {
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
         itTeam = scoreboard.getTeam("tag-it");
-        if (itTeam == null) {
-            itTeam = scoreboard.registerNewTeam("tag-it");
-        }
-        itTeam.color(NamedTextColor.DARK_RED);
-        
         notItTeam = scoreboard.getTeam("tag-notIt");
-        if (notItTeam == null) {
-            notItTeam = scoreboard.registerNewTeam("tag-notIt");
+    
+        // Delete teams if they already exist to make sure they're cleared
+        if (itTeam != null) {
+            itTeam.unregister();
         }
+        if (notItTeam != null) {
+            notItTeam.unregister();
+        }
+        
+        itTeam = scoreboard.registerNewTeam("tag-it");
+        notItTeam = scoreboard.registerNewTeam("tag-notIt");
+        itTeam.color(NamedTextColor.DARK_RED);
         notItTeam.color(NamedTextColor.DARK_BLUE);
     }
     
     public static void deleteTeams() {
         itTeam.unregister();
         notItTeam.unregister();
+    }
+    
+    public static boolean isOnTagTeam(Player player) {
+        Team team = Bukkit.getScoreboardManager().getMainScoreboard().getEntryTeam(player.getName());
+        return team != null && (team.equals(TagInfoDisplay.notItTeam) || team.equals(TagInfoDisplay.itTeam));
+    }
+    
+    public static boolean isOnItTeam(Player player) {
+        return itTeam.getEntries().contains(player.getName());
+    }
+    
+    public static boolean isOnNotItTeam(Player player) {
+        return notItTeam.getEntries().contains(player.getName());
     }
     
     private static float getElapsedTimePercentage(long currentTime, long startTime, float endTime) {

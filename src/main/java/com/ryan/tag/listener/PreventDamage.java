@@ -8,6 +8,8 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 public class PreventDamage implements Listener {
     
+    // TODO: prevent damage from blocks ex: dripstone
+    
     @EventHandler
     private void onHungerLoss(FoodLevelChangeEvent event) {
         if (Game.isPlaying) {

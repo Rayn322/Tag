@@ -6,6 +6,7 @@ import com.ryan.tag.config.SettingsGUI;
 import com.ryan.tag.config.TagSettings;
 import com.ryan.tag.gameplay.Game;
 import com.ryan.tag.gameplay.TagInfoDisplay;
+import com.ryan.tag.listener.ConnectAndDisconnect;
 import com.ryan.tag.listener.PreventDamage;
 import com.ryan.tag.listener.TagPlayer;
 import com.ryan.tag.util.CurseAPI;
@@ -73,6 +74,7 @@ public final class Tag extends JavaPlugin {
         pluginManager.registerEvents(new PreventDamage(), this);
         pluginManager.registerEvents(new TagPlayer(), this);
         pluginManager.registerEvents(new SettingsGUI(), this);
+        pluginManager.registerEvents(new ConnectAndDisconnect(), this);
     }
     
     @SuppressWarnings("ConstantConditions")

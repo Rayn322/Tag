@@ -9,13 +9,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.time.Duration;
-import java.util.ArrayList;
+import java.util.Random;
 
 public class Timer {
     
-    private static final ArrayList<Integer> tasks = new ArrayList<>();
     public static long startTime;
     public static int timeLeft;
     
@@ -39,6 +39,27 @@ public class Timer {
     
     public static void stopTimer() {
         Bukkit.getScheduler().cancelTasks(Tag.getPlugin());
+    }
+    
+    public static BukkitTask scheduleChangeItPlayer() {
+        return Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> {
+            if (!Game.isPlaying) return;
+            
+            Random random = new Random();
+            String[] entries = TagInfoDisplay.notItTeam.getEntries().toArray(new String[0]);
+            if (entries.length == 0) {
+                Game.getWorld().sendMessage(Component.text(ChatColor.RED + "Stopping the game because no players are left."));
+                Tag.getPlugin().getLogger().info(ChatColor.RED + "Stopping the game because no players are left.");
+                Game.stop();
+                return;
+            }
+            
+            String entry = entries[random.nextInt(entries.length)];
+            Player player = Bukkit.getPlayer(entry);
+            if (player != null) {
+                Game.handlePlayerTag(player, null);
+            }
+        }, 200L);
     }
     
     private static void scheduleGameEnd(int length) {

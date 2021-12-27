@@ -4,6 +4,8 @@ import com.ryan.tag.Tag;
 
 public class TagSettings {
     
+    // TODO: choose gamemode, night vision, who starts as it
+    
     private static double timerLength = 1;
     private static int borderSize = 50;
     private static int spawnX = 0;

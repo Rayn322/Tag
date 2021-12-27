@@ -5,7 +5,6 @@ import com.ryan.tag.config.SettingsGUI;
 import com.ryan.tag.gameplay.Game;
 import net.kyori.adventure.text.Component;
 import org.apache.commons.lang.ArrayUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -37,7 +36,7 @@ public class TagCommand implements TabExecutor {
         if (!(sender instanceof Player)) {
             if (args[0].equalsIgnoreCase("stop")) {
                 if (Game.isPlaying) {
-                    Bukkit.broadcast(Component.text(ChatColor.RED + "The game has been stopped by console."));
+                    Game.getWorld().sendMessage(Component.text(ChatColor.RED + "The game has been stopped by console."));
                     Game.stop();
                 } else {
                     sender.sendMessage(ChatColor.RED + "No game is being played!");
@@ -57,7 +56,7 @@ public class TagCommand implements TabExecutor {
             
         } else if (args[0].equalsIgnoreCase("stop")) {
             if (Game.isPlaying) {
-                Bukkit.broadcast(Component.text(ChatColor.RED + "Game stopped by " + ChatColor.YELLOW + "" + ChatColor.BOLD + sender.getName() + ChatColor.RED + "."));
+                Game.getWorld().sendMessage(Component.text(ChatColor.RED + "Game stopped by " + ChatColor.YELLOW + "" + ChatColor.BOLD + sender.getName() + ChatColor.RED + "."));
                 Game.stop();
             } else {
                 sender.sendMessage(ChatColor.RED + "No game is being played!");
