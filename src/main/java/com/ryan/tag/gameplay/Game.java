@@ -20,7 +20,6 @@ public class Game {
     public static boolean isPlaying = false;
     public static boolean isSpawnProtected = false;
     // using UUID to prevent issues if players rejoin
-    // TODO: if they leave while it, change it player
     private static UUID itPlayer;
     private static World world;
     

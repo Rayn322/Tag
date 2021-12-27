@@ -42,6 +42,7 @@ public class Timer {
     }
     
     public static BukkitTask scheduleChangeItPlayer() {
+        // TODO: make separate method to get random player
         return Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> {
             if (!Game.isPlaying) return;
             
