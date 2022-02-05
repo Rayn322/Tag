@@ -4,7 +4,7 @@ import com.ryan.tag.Tag;
 
 public class TagSettings {
     
-    // TODO: choose gamemode, night vision, who starts as it
+    // TODO: choose gamemode, night vision, who starts as it, nametag visibility
     
     private static double timerLength = 1;
     private static int borderSize = 50;
