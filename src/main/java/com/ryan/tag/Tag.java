@@ -5,7 +5,7 @@ import com.ryan.tag.command.TagCommand;
 import com.ryan.tag.config.SettingsGUI;
 import com.ryan.tag.config.TagSettings;
 import com.ryan.tag.gameplay.Game;
-import com.ryan.tag.gameplay.TagInfoDisplay;
+import com.ryan.tag.gameplay.TeamManager;
 import com.ryan.tag.listener.ConnectAndDisconnect;
 import com.ryan.tag.listener.PreventDamage;
 import com.ryan.tag.listener.TagPlayer;
@@ -45,7 +45,7 @@ public final class Tag extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveConfig();
         TagSettings.readFromConfig();
-        TagInfoDisplay.createTeams();
+        TeamManager.createTeams();
     
         try {
             CurseAPI.checkForUpdates();
@@ -64,7 +64,7 @@ public final class Tag extends JavaPlugin {
             Game.stop();
             getLogger().info(ChatColor.RED + "Stopping game because the server has stopped.");
         }
-        TagInfoDisplay.deleteTeams();
+        TeamManager.deleteTeams();
         TagSettings.writeToConfig();
         saveConfig();
     }

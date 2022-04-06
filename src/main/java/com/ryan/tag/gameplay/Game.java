@@ -83,7 +83,7 @@ public class Game {
             attacker.removePotionEffect(PotionEffectType.SPEED);
         }
         
-        TagInfoDisplay.setPlayerTeams(tagged, attacker);
+        TeamManager.setPlayerTeams(tagged, attacker);
         world.sendMessage(Component.text(ChatColor.YELLOW + "" + ChatColor.BOLD + tagged.getName() + ChatColor.RESET + "" + ChatColor.GREEN + " is now it!"));
         tagged.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, true, false));
     }

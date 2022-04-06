@@ -19,7 +19,6 @@ public class PlayerDataSaver {
         return playerDataMap.get(uuid);
     }
     
-    // TODO: deal with players logging out or logging in during the game
     private static void restoreData(UUID uuid) {
         PlayerData playerData = getData(uuid);
         Player player = Bukkit.getPlayer(uuid);

@@ -2,7 +2,7 @@ package com.ryan.tag.setup;
 
 import com.ryan.tag.Tag;
 import com.ryan.tag.gameplay.Game;
-import com.ryan.tag.gameplay.TagInfoDisplay;
+import com.ryan.tag.gameplay.TeamManager;
 import com.ryan.tag.gameplay.Timer;
 import com.ryan.tag.listener.ConnectAndDisconnect;
 import com.ryan.tag.util.WorldBorderUtil;
@@ -18,7 +18,7 @@ public class PostGame {
         Game.isPlaying = false;
         WorldBorderUtil.resetBorder(world);
         world.sendActionBar(Component.empty());
-        TagInfoDisplay.clearTeams();
+        TeamManager.clearTeams();
         ConnectAndDisconnect.disconnectedAsIt = null;
         ConnectAndDisconnect.wasNotIt.clear();
         

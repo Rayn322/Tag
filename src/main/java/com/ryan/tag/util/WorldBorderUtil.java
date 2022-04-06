@@ -6,12 +6,12 @@ import org.bukkit.WorldBorder;
 public class WorldBorderUtil {
     
     /**
-     * Sets the center and size of the WorldBorder
+     * Sets the center and size of the WorldBorder.
      *
-     * @param world   The world in question
-     * @param centerX The x-coordinate of the new center
-     * @param centerZ The x-coordinate of the new center
-     * @param size    The new side length
+     * @param world   The world in question.
+     * @param centerX The x-coordinate of the new center.
+     * @param centerZ The x-coordinate of the new center.
+     * @param size    The new side length.
      */
     public static void setBorder(World world, int centerX, int centerZ, double size) {
         WorldBorder worldBorder = world.getWorldBorder();
@@ -20,9 +20,9 @@ public class WorldBorderUtil {
     }
     
     /**
-     * Resets the WorldBorder
+     * Resets the WorldBorder.
      *
-     * @param world The world in question
+     * @param world The world in question.
      */
     public static void resetBorder(World world) {
         world.getWorldBorder().reset();

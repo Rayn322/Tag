@@ -47,7 +47,7 @@ public class Timer {
             if (!Game.isPlaying) return;
             
             Random random = new Random();
-            String[] entries = TagInfoDisplay.notItTeam.getEntries().toArray(new String[0]);
+            String[] entries = TeamManager.notItTeam.getEntries().toArray(new String[0]);
             if (entries.length == 0) {
                 Game.getWorld().sendMessage(Component.text(ChatColor.RED + "Stopping the game because no players are left."));
                 Tag.getPlugin().getLogger().info(ChatColor.RED + "Stopping the game because no players are left.");
@@ -87,7 +87,7 @@ public class Timer {
         // in case game is stopped during initial countdown
         if (!Game.isPlaying) return;
         
-        Title title = Title.title(Component.text(ChatColor.GREEN + message), Component.empty(), Title.Times.of(Duration.ofMillis(250), Duration.ofSeconds(1), Duration.ofMillis(250)));
+        Title title = Title.title(Component.text(ChatColor.GREEN + message), Component.empty(), Title.Times.times(Duration.ofMillis(250), Duration.ofSeconds(1), Duration.ofMillis(250)));
         
         for (Player player : world.getPlayers()) {
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, pitch);

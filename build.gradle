@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT'
+    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
 }
 
 def targetJavaVersion = 17
@@ -50,5 +50,5 @@ processResources {
 task copyJar(type: Copy) {
     dependsOn(build)
     from file("${buildDir}/libs/Tag-${version}.jar")
-    into file("C:/Users/Ryan/Documents/MinecraftServers/Paper-1.18.1/plugins")
+    into file("C:/Users/Ryan/Documents/MinecraftServers/Paper-1.18.2/plugins")
 }

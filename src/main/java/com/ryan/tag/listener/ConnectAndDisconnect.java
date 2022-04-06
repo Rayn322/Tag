@@ -1,7 +1,7 @@
 package com.ryan.tag.listener;
 
 import com.ryan.tag.gameplay.Game;
-import com.ryan.tag.gameplay.TagInfoDisplay;
+import com.ryan.tag.gameplay.TeamManager;
 import com.ryan.tag.gameplay.Timer;
 import com.ryan.tag.setup.PlayerDataSaver;
 import net.kyori.adventure.text.Component;
@@ -41,14 +41,14 @@ public class ConnectAndDisconnect implements Listener {
                 Game.getWorld().sendMessage(Component.text(ChatColor.YELLOW + "" + ChatColor.BOLD + event.getPlayer().getName() + ChatColor.RESET + "" + ChatColor.GREEN + " has reconnected and is now it."));
             }
             
-        } else if (!TagInfoDisplay.isOnTagTeam(event.getPlayer())) {
+        } else if (!TeamManager.isOnTagTeam(event.getPlayer())) {
             Player player = event.getPlayer();
             PlayerDataSaver.saveData(player);
             player.setGameMode(GameMode.SPECTATOR);
             player.teleport(Game.getItPlayer().getLocation());
             
         } else if (wasNotIt.contains(event.getPlayer().getUniqueId())) {
-            TagInfoDisplay.notItTeam.addEntry(event.getPlayer().getName());
+            TeamManager.notItTeam.addEntry(event.getPlayer().getName());
             wasNotIt.remove(event.getPlayer().getUniqueId());
         }
     }
@@ -63,8 +63,8 @@ public class ConnectAndDisconnect implements Listener {
             task = Timer.scheduleChangeItPlayer();
             disconnectedAsIt = event.getPlayer();
             event.getPlayer().getWorld().sendMessage(Component.text(ChatColor.RED + "The player who was it disconnected. If they don't reconnect, a random player will become it in 10 seconds."));
-        } else if (TagInfoDisplay.isOnNotItTeam(event.getPlayer())) {
-            TagInfoDisplay.notItTeam.removeEntry(event.getPlayer().getName());
+        } else if (TeamManager.isOnNotItTeam(event.getPlayer())) {
+            TeamManager.notItTeam.removeEntry(event.getPlayer().getName());
             wasNotIt.add(event.getPlayer().getUniqueId());
             System.out.println("Removing " + event.getPlayer().getName() + " from not it team");
         }
