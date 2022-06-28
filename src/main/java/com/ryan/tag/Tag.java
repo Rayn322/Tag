@@ -18,7 +18,7 @@ import java.io.IOException;
 
 public final class Tag extends JavaPlugin {
     
-    public static String version = "1.0.2";
+    public static String version = "1.0.3";
     private static boolean isPaper = true;
     private static Tag plugin;
     

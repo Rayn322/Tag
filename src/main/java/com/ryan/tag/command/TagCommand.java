@@ -4,7 +4,6 @@ import com.ryan.tag.Tag;
 import com.ryan.tag.config.SettingsGUI;
 import com.ryan.tag.gameplay.Game;
 import net.kyori.adventure.text.Component;
-import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -28,7 +27,7 @@ public class TagCommand implements TabExecutor {
     
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (ArrayUtils.isEmpty(args)) {
+        if (args.length == 0) {
             printHelpMessage(sender);
             return true;
         }
