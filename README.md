@@ -8,5 +8,5 @@ A Minecraft plugin that lets you play tag with your friends!
 -   /tag-game help - Displays a help message with these commands.
 
 ## Requirements
--   A Paper server running 1.18. Future versions of Paper may work.
+-   A Paper server running 1.18.2. Future versions of Paper may work.
 -   Friends!
