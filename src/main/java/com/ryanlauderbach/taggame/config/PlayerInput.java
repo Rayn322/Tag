@@ -54,7 +54,8 @@ class LengthPrompt extends NumericPrompt {
             context.getForWhom().sendRawMessage(ChatColor.DARK_GREEN + "Length set to " + ChatColor.YELLOW + input.intValue() + " minutes" + ChatColor.DARK_GREEN + ".");
             TagSettings.setTimerLength(input.intValue());
         }
-        
+
+        TagSettings.setInfiniteGame(false);
         SettingsGUI.showGUI((Player) context.getForWhom());
         
         return END_OF_CONVERSATION;
