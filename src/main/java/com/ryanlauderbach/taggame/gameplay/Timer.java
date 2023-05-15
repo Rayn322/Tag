@@ -26,7 +26,6 @@ public class Timer {
         Bukkit.getScheduler().runTaskLater(TagGame.getPlugin(), () -> sendCountdown(world, "1", 0.5f), 80L);
         Bukkit.getScheduler().runTaskLater(TagGame.getPlugin(), () -> {
             sendCountdown(world, "Go!", 1f);
-            // TODO: fix timer, spawn protection never gets turned off
             Game.isSpawnProtected = false;
             if (!TagSettings.isInfiniteGame()) {
                 // convert minutes to ticks
