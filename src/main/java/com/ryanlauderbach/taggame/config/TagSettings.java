@@ -1,6 +1,6 @@
-package com.ryan.tag.config;
+package com.ryanlauderbach.taggame.config;
 
-import com.ryan.tag.Tag;
+import com.ryanlauderbach.taggame.TagGame;
 
 public class TagSettings {
     
@@ -15,7 +15,7 @@ public class TagSettings {
     private static boolean infiniteGame = false;
     
     public static void readFromConfig() {
-        Tag plugin = Tag.getPlugin();
+        TagGame plugin = TagGame.getPlugin();
         timerLength = plugin.getConfig().getDouble("timerLength");
         borderSize = plugin.getConfig().getInt("borderSize");
         spawnX = plugin.getConfig().getInt("spawnX");
@@ -26,7 +26,7 @@ public class TagSettings {
     }
     
     public static void writeToConfig() {
-        Tag plugin = Tag.getPlugin();
+        TagGame plugin = TagGame.getPlugin();
         plugin.getConfig().set("timerLength", timerLength);
         plugin.getConfig().set("borderSize", borderSize);
         plugin.getConfig().set("spawnX", spawnX);

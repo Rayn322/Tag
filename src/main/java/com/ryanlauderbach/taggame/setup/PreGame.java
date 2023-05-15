@@ -1,11 +1,11 @@
-package com.ryan.tag.setup;
+package com.ryanlauderbach.taggame.setup;
 
-import com.ryan.tag.config.TagSettings;
-import com.ryan.tag.gameplay.Game;
-import com.ryan.tag.gameplay.TagInfoDisplay;
-import com.ryan.tag.gameplay.TeamManager;
-import com.ryan.tag.gameplay.Timer;
-import com.ryan.tag.util.WorldBorderUtil;
+import com.ryanlauderbach.taggame.config.TagSettings;
+import com.ryanlauderbach.taggame.gameplay.Game;
+import com.ryanlauderbach.taggame.gameplay.TagInfoDisplay;
+import com.ryanlauderbach.taggame.gameplay.TeamManager;
+import com.ryanlauderbach.taggame.gameplay.Timer;
+import com.ryanlauderbach.taggame.util.WorldBorderUtil;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;

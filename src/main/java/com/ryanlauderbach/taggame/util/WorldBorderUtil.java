@@ -1,4 +1,4 @@
-package com.ryan.tag.util;
+package com.ryanlauderbach.taggame.util;
 
 import org.bukkit.World;
 import org.bukkit.WorldBorder;

@@ -1,8 +1,8 @@
-package com.ryan.tag.gameplay;
+package com.ryanlauderbach.taggame.gameplay;
 
-import com.ryan.tag.config.TagSettings;
-import com.ryan.tag.setup.PostGame;
-import com.ryan.tag.setup.PreGame;
+import com.ryanlauderbach.taggame.config.TagSettings;
+import com.ryanlauderbach.taggame.setup.PostGame;
+import com.ryanlauderbach.taggame.setup.PreGame;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

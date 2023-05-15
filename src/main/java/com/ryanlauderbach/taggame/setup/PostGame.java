@@ -1,11 +1,11 @@
-package com.ryan.tag.setup;
+package com.ryanlauderbach.taggame.setup;
 
-import com.ryan.tag.Tag;
-import com.ryan.tag.gameplay.Game;
-import com.ryan.tag.gameplay.TeamManager;
-import com.ryan.tag.gameplay.Timer;
-import com.ryan.tag.listener.ConnectAndDisconnect;
-import com.ryan.tag.util.WorldBorderUtil;
+import com.ryanlauderbach.taggame.TagGame;
+import com.ryanlauderbach.taggame.gameplay.Game;
+import com.ryanlauderbach.taggame.gameplay.TeamManager;
+import com.ryanlauderbach.taggame.gameplay.Timer;
+import com.ryanlauderbach.taggame.listener.ConnectAndDisconnect;
+import com.ryanlauderbach.taggame.util.WorldBorderUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -32,8 +32,8 @@ public class PostGame {
         
         Timer.stopTimer();
         // don't register task when disabling plugin
-        if (Tag.getPlugin().isEnabled()) {
-            Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), PlayerDataSaver::restoreAllData, 40L);
+        if (TagGame.getPlugin().isEnabled()) {
+            Bukkit.getScheduler().runTaskLater(TagGame.getPlugin(), PlayerDataSaver::restoreAllData, 40L);
         } else {
             PlayerDataSaver.restoreAllData();
         }

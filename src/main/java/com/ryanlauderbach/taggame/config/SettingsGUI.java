@@ -1,4 +1,4 @@
-package com.ryan.tag.config;
+package com.ryanlauderbach.taggame.config;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;

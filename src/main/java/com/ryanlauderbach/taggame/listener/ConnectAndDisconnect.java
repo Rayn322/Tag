@@ -1,9 +1,9 @@
-package com.ryan.tag.listener;
+package com.ryanlauderbach.taggame.listener;
 
-import com.ryan.tag.gameplay.Game;
-import com.ryan.tag.gameplay.TeamManager;
-import com.ryan.tag.gameplay.Timer;
-import com.ryan.tag.setup.PlayerDataSaver;
+import com.ryanlauderbach.taggame.gameplay.Game;
+import com.ryanlauderbach.taggame.gameplay.TeamManager;
+import com.ryanlauderbach.taggame.gameplay.Timer;
+import com.ryanlauderbach.taggame.setup.PlayerDataSaver;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;

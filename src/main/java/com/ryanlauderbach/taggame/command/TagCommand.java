@@ -1,8 +1,8 @@
-package com.ryan.tag.command;
+package com.ryanlauderbach.taggame.command;
 
-import com.ryan.tag.Tag;
-import com.ryan.tag.config.SettingsGUI;
-import com.ryan.tag.gameplay.Game;
+import com.ryanlauderbach.taggame.TagGame;
+import com.ryanlauderbach.taggame.config.SettingsGUI;
+import com.ryanlauderbach.taggame.gameplay.Game;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -18,7 +18,7 @@ public class TagCommand implements TabExecutor {
     
     private final String[] helpMessage = {
             ChatColor.DARK_BLUE + "-----------------------------------------------------",
-            ChatColor.YELLOW + "" + ChatColor.BOLD + "Tag v" + Tag.version + " by Ryan",
+            ChatColor.YELLOW + "" + ChatColor.BOLD + "Tag v" + TagGame.version + " by Ryan",
             ChatColor.YELLOW + "/tag-game <start/stop>" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Starts or stops the game.",
             ChatColor.YELLOW + "/tag-game settings" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "View and edit settings.",
             ChatColor.YELLOW + "/tag-game help" + ChatColor.DARK_GREEN + " -- " + ChatColor.YELLOW + "Prints this message.",

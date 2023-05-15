@@ -1,7 +1,7 @@
-package com.ryan.tag.gameplay;
+package com.ryanlauderbach.taggame.gameplay;
 
-import com.ryan.tag.Tag;
-import com.ryan.tag.config.TagSettings;
+import com.ryanlauderbach.taggame.TagGame;
+import com.ryanlauderbach.taggame.config.TagSettings;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
@@ -21,11 +21,12 @@ public class Timer {
     
     public static void startTimer(World world) {
         // countdown
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> sendCountdown(world, "3", 0.5f), 40L);
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> sendCountdown(world, "2", 0.5f), 60L);
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> sendCountdown(world, "1", 0.5f), 80L);
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> {
+        Bukkit.getScheduler().runTaskLater(TagGame.getPlugin(), () -> sendCountdown(world, "3", 0.5f), 40L);
+        Bukkit.getScheduler().runTaskLater(TagGame.getPlugin(), () -> sendCountdown(world, "2", 0.5f), 60L);
+        Bukkit.getScheduler().runTaskLater(TagGame.getPlugin(), () -> sendCountdown(world, "1", 0.5f), 80L);
+        Bukkit.getScheduler().runTaskLater(TagGame.getPlugin(), () -> {
             sendCountdown(world, "Go!", 1f);
+            // TODO: fix timer, spawn protection never gets turned off
             Game.isSpawnProtected = false;
             if (!TagSettings.isInfiniteGame()) {
                 // convert minutes to ticks
@@ -38,19 +39,19 @@ public class Timer {
     }
     
     public static void stopTimer() {
-        Bukkit.getScheduler().cancelTasks(Tag.getPlugin());
+        Bukkit.getScheduler().cancelTasks(TagGame.getPlugin());
     }
     
     public static BukkitTask scheduleChangeItPlayer() {
         // TODO: make separate method to get random player
-        return Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> {
+        return Bukkit.getScheduler().runTaskLater(TagGame.getPlugin(), () -> {
             if (!Game.isPlaying) return;
             
             Random random = new Random();
             String[] entries = TeamManager.notItTeam.getEntries().toArray(new String[0]);
             if (entries.length == 0) {
                 Game.getWorld().sendMessage(Component.text(ChatColor.RED + "Stopping the game because no players are left."));
-                Tag.getPlugin().getLogger().info(ChatColor.RED + "Stopping the game because no players are left.");
+                TagGame.getPlugin().getLogger().info(ChatColor.RED + "Stopping the game because no players are left.");
                 Game.stop();
                 return;
             }
@@ -75,9 +76,9 @@ public class Timer {
         scheduleCountdownMessage(2);
         scheduleCountdownMessage(1);
         
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), Game::stop, length);
-        Bukkit.getScheduler().runTaskTimer(Tag.getPlugin(), TagInfoDisplay::updateXPTimer, 0, 10);
-        Bukkit.getScheduler().runTaskTimer(Tag.getPlugin(), () -> {
+        Bukkit.getScheduler().runTaskLater(TagGame.getPlugin(), Game::stop, length);
+        Bukkit.getScheduler().runTaskTimer(TagGame.getPlugin(), TagInfoDisplay::updateXPTimer, 0, 10);
+        Bukkit.getScheduler().runTaskTimer(TagGame.getPlugin(), () -> {
             TagInfoDisplay.updateXPLevel(timeLeft);
             timeLeft--;
         }, 0, 20);
@@ -96,7 +97,7 @@ public class Timer {
     }
     
     private static void scheduleCountdownMessage(int secondsBeforeEnd) {
-        Bukkit.getScheduler().runTaskLater(Tag.getPlugin(), () -> {
+        Bukkit.getScheduler().runTaskLater(TagGame.getPlugin(), () -> {
             if (secondsBeforeEnd == 1) {
                 Bukkit.getServer().broadcast(Component.text(ChatColor.GREEN + "" + secondsBeforeEnd + " second left."));
             } else {

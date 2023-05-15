@@ -1,4 +1,4 @@
-package com.ryan.tag.setup;
+package com.ryanlauderbach.taggame.setup;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;

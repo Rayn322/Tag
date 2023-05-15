@@ -1,6 +1,6 @@
-package com.ryan.tag.listener;
+package com.ryanlauderbach.taggame.listener;
 
-import com.ryan.tag.gameplay.Game;
+import com.ryanlauderbach.taggame.gameplay.Game;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

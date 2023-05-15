@@ -1,7 +1,7 @@
-package com.ryan.tag.gameplay;
+package com.ryanlauderbach.taggame.gameplay;
 
-import com.ryan.tag.Tag;
-import com.ryan.tag.config.TagSettings;
+import com.ryanlauderbach.taggame.TagGame;
+import com.ryanlauderbach.taggame.config.TagSettings;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,7 +25,7 @@ public class TagInfoDisplay {
     }
     
     public static void sendItPlayerTitle() {
-        Bukkit.getScheduler().runTaskTimer(Tag.getPlugin(), () -> {
+        Bukkit.getScheduler().runTaskTimer(TagGame.getPlugin(), () -> {
             if (Game.getItPlayer() != null) {
                 Game.getWorld().sendActionBar(Component.text(ChatColor.DARK_RED + "" + ChatColor.BOLD + Game.getItPlayer().getName() + " is it"));
             }

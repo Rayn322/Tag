@@ -1,28 +1,28 @@
-package com.ryan.tag;
+package com.ryanlauderbach.taggame;
 
-import com.ryan.tag.bstats.Metrics;
-import com.ryan.tag.command.TagCommand;
-import com.ryan.tag.config.SettingsGUI;
-import com.ryan.tag.config.TagSettings;
-import com.ryan.tag.gameplay.Game;
-import com.ryan.tag.gameplay.TeamManager;
-import com.ryan.tag.listener.ConnectAndDisconnect;
-import com.ryan.tag.listener.PreventDamage;
-import com.ryan.tag.listener.TagPlayer;
-import com.ryan.tag.util.CurseAPI;
+import com.ryanlauderbach.taggame.bstats.Metrics;
+import com.ryanlauderbach.taggame.command.TagCommand;
+import com.ryanlauderbach.taggame.config.SettingsGUI;
+import com.ryanlauderbach.taggame.config.TagSettings;
+import com.ryanlauderbach.taggame.gameplay.Game;
+import com.ryanlauderbach.taggame.gameplay.TeamManager;
+import com.ryanlauderbach.taggame.listener.ConnectAndDisconnect;
+import com.ryanlauderbach.taggame.listener.PreventDamage;
+import com.ryanlauderbach.taggame.listener.TagPlayer;
+import com.ryanlauderbach.taggame.util.CurseAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 
-public final class Tag extends JavaPlugin {
+public final class TagGame extends JavaPlugin {
     
     public static String version = "1.0.3";
     private static boolean isPaper = true;
-    private static Tag plugin;
+    private static TagGame plugin;
     
-    public static Tag getPlugin() {
+    public static TagGame getPlugin() {
         return plugin;
     }
     

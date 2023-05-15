@@ -1,6 +1,6 @@
-package com.ryan.tag.config;
+package com.ryanlauderbach.taggame.config;
 
-import com.ryan.tag.Tag;
+import com.ryanlauderbach.taggame.TagGame;
 import org.bukkit.ChatColor;
 import org.bukkit.conversations.*;
 import org.bukkit.entity.Player;
@@ -14,7 +14,7 @@ public class PlayerInput {
             return;
         }
         
-        ConversationFactory factory = new ConversationFactory(Tag.getPlugin());
+        ConversationFactory factory = new ConversationFactory(TagGame.getPlugin());
         Conversation conversation = factory.withFirstPrompt(new LengthPrompt()).withLocalEcho(false).withEscapeSequence("exit").buildConversation(player);
         conversation.begin();
     }
@@ -24,7 +24,7 @@ public class PlayerInput {
             return;
         }
         
-        ConversationFactory factory = new ConversationFactory(Tag.getPlugin());
+        ConversationFactory factory = new ConversationFactory(TagGame.getPlugin());
         Conversation conversation = factory.withFirstPrompt(new XPrompt()).withLocalEcho(false).withEscapeSequence("exit").buildConversation(player);
         conversation.begin();
     }
@@ -34,7 +34,7 @@ public class PlayerInput {
             return;
         }
         
-        ConversationFactory factory = new ConversationFactory(Tag.getPlugin());
+        ConversationFactory factory = new ConversationFactory(TagGame.getPlugin());
         Conversation conversation = factory.withFirstPrompt(new BorderPrompt()).withLocalEcho(false).withEscapeSequence("exit").buildConversation(player);
         conversation.begin();
     }

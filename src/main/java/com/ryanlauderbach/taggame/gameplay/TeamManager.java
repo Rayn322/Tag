@@ -1,4 +1,4 @@
-package com.ryan.tag.gameplay;
+package com.ryanlauderbach.taggame.gameplay;
 
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;

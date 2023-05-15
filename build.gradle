@@ -2,24 +2,23 @@ plugins {
     id 'java'
 }
 
-group = 'com.ryan'
+group = 'com.ryanlauderbach'
 version = '1.0.3'
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven {
-        name = 'papermc-repo'
-        url = 'https://repo.papermc.io/repository/maven-public/'
+        name = "papermc-repo"
+        url = "https://repo.papermc.io/repository/maven-public/"
     }
     maven {
-        name = 'sonatype'
-        url = 'https://oss.sonatype.org/content/groups/public/'
+        name = "sonatype"
+        url = "https://oss.sonatype.org/content/groups/public/"
     }
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
+    compileOnly "io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT"
 }
 
 def targetJavaVersion = 17
@@ -45,10 +44,4 @@ processResources {
     filesMatching('plugin.yml') {
         expand props
     }
-}
-
-task copyJar(type: Copy) {
-    dependsOn(build)
-    from file("${buildDir}/libs/Tag-${version}.jar")
-    into file("C:/Users/Ryan/Documents/MinecraftServers/Paper-1.19/plugins")
 }
