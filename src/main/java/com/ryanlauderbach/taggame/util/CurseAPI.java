@@ -13,7 +13,6 @@ import java.util.List;
 public class CurseAPI {
     
     // https://github.com/google/gson/blob/master/UserGuide.md#collections-examples
-    @SuppressWarnings("UnstableApiUsage")
     public static void checkForUpdates() throws IOException {
         TagGame.getPlugin().getLogger().info("Checking for updates...");
         URL url = new URL("https://api.curseforge.com/servermods/files?projectIds=405163");
@@ -21,6 +20,11 @@ public class CurseAPI {
         Type collectionType = new TypeToken<List<File>>(){}.getType();
         List<File> filesCollection = new Gson().fromJson(reader, collectionType);
         reader.close();
+
+        if (filesCollection.isEmpty()) {
+            TagGame.getPlugin().getLogger().warning("Unable to check for updates");
+            return;
+        }
         
         if (!filesCollection.get(filesCollection.size() - 1).name.contains(TagGame.version)) {
             TagGame.getPlugin().getLogger().warning("New version available: " + filesCollection.get(filesCollection.size() - 1).name);
